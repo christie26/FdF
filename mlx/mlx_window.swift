@@ -45,6 +45,11 @@ class WinEvent: NSWindow
 
   }
 
+  func delNotifs()
+  {
+      NotificationCenter.default.removeObserver(self, name: NSWindow.willCloseNotification, object: nil)
+  }
+
   public func setKeyRepeat(_ mode:Int)
   {
 	keyrepeat = mode;
@@ -58,8 +63,8 @@ class WinEvent: NSWindow
 	if (idx == 6 || idx == 32)
 	{
 		if (fptr != nil) ///  == nullptr)
-		   { self.acceptsMouseMovedEvents = false }
-		else { self.acceptsMouseMovedEvents = true }
+		   { self.acceptsMouseMovedEvents = true }
+		else { self.acceptsMouseMovedEvents = false }
 	}
   }
 
@@ -201,38 +206,82 @@ class WinEvent: NSWindow
 	exposeNotification(notification)
   }
 
+}
 
 
+
+
+
+struct textureList
+{
+   var uniformBuffer: MTLBuffer!
+   var uniform_data:UnsafeMutablePointer<Float>
+   unowned var image:MlxImg
 }
 
 
 public class MlxWin
 {
+  let vrect: CGRect
   var winE: WinEvent
+  var mlayer: CAMetalLayer
 
-  var device: MTLDevice
-  var mview: MTKView
-  var md: MTKVDelegate
+  unowned var device: MTLDevice
+  var commandQueue: MTLCommandQueue!
+  var pipelineState: MTLRenderPipelineState!
+  var vertexBuffer: MTLBuffer!
+
+  var texture_list: Array<textureList> = Array()
+  var texture_list_count = 0
+
+  var pixel_image:MlxImg
+  var pixel_count:Int
+
+  var drawable_image: MlxImg
+  var uniq_renderPassDescriptor: MTLRenderPassDescriptor
+  var mtl_origin_null : MTLOrigin
+  var mtl_size_all : MTLSize
+  var doClear = false
+  var GPUbatch = 0
+
 
   public init(device d:MTLDevice, width w:Int, height h:Int, title t:String)
   {
-    let rect = CGRect(x: 100, y: 100, width: w, height: h)
-    winE = WinEvent(frame: rect)
+    vrect = CGRect(x: 100, y: 100, width: w, height: h)
+    winE = WinEvent(frame: vrect)
 
     device = d
-    mview = MTKView(frame: rect, device:device)
-    mview.clearColor = MTLClearColorMake(0, 0, 0, 0)
-    mview.colorPixelFormat = .bgra8Unorm
-    mview.isPaused = true
-    mview.enableSetNeedsDisplay = false
-    md = MTKVDelegate(view:mview, device:device)
-    mview.delegate = md
-    clearWin()
-
-    winE.contentView = mview
+    mlayer = CAMetalLayer()
+    mlayer.device = device
+    mlayer.pixelFormat = .bgra8Unorm
+    mlayer.framebufferOnly = true
+    mlayer.contentsScale = 1.0 /// winE.screen!.backingScaleFactor
+    mlayer.frame = vrect
+    winE.contentView! = NSView(frame: vrect)
+    winE.contentView!.wantsLayer = true
+    winE.contentView!.layer = mlayer
     winE.title = t
-    winE.makeKeyAndOrderFront(self)
+    winE.isReleasedWhenClosed = false
+    winE.makeKeyAndOrderFront(nil)
+
+
+    /// drawable_image = MlxImg(d: device, w:Int(CGFloat(vrect.size.width)*winE.screen!.backingScaleFactor), h:Int(CGFloat(vrect.size.height)*winE.screen!.backingScaleFactor), t:1)
+    drawable_image = MlxImg(d: device, w:Int(vrect.size.width), h:Int(vrect.size.height), t:1)
+    pixel_image = MlxImg(d: device, w:Int(vrect.size.width), h:Int(vrect.size.height))
+    for i in 0...(pixel_image.texture_height*pixel_image.texture_sizeline/4-1)
+      { pixel_image.texture_data[i] = UInt32(0xFF000000) }
+    pixel_count = 0
+
+    mtl_origin_null = MTLOriginMake(0,0,0)
+    mtl_size_all = MTLSizeMake(drawable_image.texture.width, drawable_image.texture.height, 1)
+
+    uniq_renderPassDescriptor = MTLRenderPassDescriptor()
+    uniq_renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.0, green: 0.0, blue: 0.0, alpha:0.0)
+    uniq_renderPassDescriptor.colorAttachments[0].texture = drawable_image.texture
+    uniq_renderPassDescriptor.colorAttachments[0].storeAction = .store
+    uniq_renderPassDescriptor.colorAttachments[0].loadAction = .load
   }
+
 
 /// winEvent calls
   public func getWinEFrame() -> NSRect  { return winE.frame }
@@ -243,16 +292,204 @@ public class MlxWin
   public func setKeyRepeat(_ mode:Int)  { winE.setKeyRepeat(mode) }
   public func destroyWinE()  { winE.close() }
   public func setNotifs() { winE.setNotifs() }
+  public func delNotifs() { winE.delNotifs() }
 
-/// mtkviewdelegate calls
-  public func clearWin()  {  md.clearWin() }
-  public func pixelPut(_ x:Int32, _ y:Int32, _ color:UInt32)  {  md.pixelPut(x, y, color) }
-  public func putImageScale(image img:MlxImg, sx srcx:Int32, sy srcy:Int32, sw srcw:Int32, sh srch:Int32, dx posx:Int32, dy posy:Int32, dw dest_w:Int32, dh dest_h:Int32, c color:UInt32) { md.putImageScale(img, srcx, srcy, srcw, srch, posx, posy, dest_w, dest_h, color) }
-///  	      			  	      	  print("putimagescale \(srcx) \(srcy) \(srcw) \(srch) \(posx) \(posy) \(dest_w) \(dest_h) \(color)") }
-  public func putImage(image img:MlxImg, x posx:Int32, y posy:Int32) { md.putImage(img, posx, posy) }
-  public func waitForGPU() { md.waitForGPU() }
-  public func flushPixels() { md.flushPixels() }
-  public func flushImages() { md.flushImages() }
+
+  public func initMetal()
+  {
+    commandQueue = device.makeCommandQueue()!
+
+    /// vertex buffer & shaders stay the always the same.
+    let lib = try! device.makeLibrary(source: shaders, options: nil)
+    let vertexFunction = lib.makeFunction(name: "basic_vertex_function")
+    let fragmentFunction = lib.makeFunction(name: "basic_fragment_function")
+    let pipelineDesc = MTLRenderPipelineDescriptor()
+    pipelineDesc.colorAttachments[0].pixelFormat = .bgra8Unorm
+    pipelineDesc.colorAttachments[0].isBlendingEnabled = true
+    pipelineDesc.colorAttachments[0].rgbBlendOperation = .add
+    pipelineDesc.colorAttachments[0].alphaBlendOperation = .add
+    pipelineDesc.colorAttachments[0].sourceRGBBlendFactor = .oneMinusSourceAlpha
+    pipelineDesc.colorAttachments[0].sourceAlphaBlendFactor = .oneMinusSourceAlpha
+    pipelineDesc.colorAttachments[0].destinationRGBBlendFactor = .sourceAlpha
+    pipelineDesc.colorAttachments[0].destinationAlphaBlendFactor = .sourceAlpha
+    pipelineDesc.vertexFunction = vertexFunction
+    pipelineDesc.fragmentFunction = fragmentFunction
+    pipelineState = try! device.makeRenderPipelineState(descriptor: pipelineDesc)
+
+    let vertexData: [Float] = [
+       -1.0, -1.0, 0.0, 1.0,  0.0, 1.0, 0.0, 0.0,
+       -1.0, 1.0, 0.0, 1.0,   0.0, 0.0, 0.0, 0.0,
+       1.0, -1.0, 0.0, 1.0,   1.0, 1.0, 0.0, 0.0,
+       1.0, -1.0, 0.0, 1.0,   1.0, 1.0, 0.0, 0.0,
+       -1.0, 1.0, 0.0, 1.0,   0.0, 0.0, 0.0, 0.0,
+       1.0, 1.0, 0.0, 1.0,    1.0, 0.0, 0.0, 0.0  ]
+    var dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0])
+    vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: []) 
+
+    let uniformData: [Float] = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Float(vrect.size.width), Float(vrect.size.height), 0.0, 0.0, 0.0, 0.0,
+    		     	       1.0, 1.0, 1.0, 1.0 ]
+    dataSize = uniformData.count * MemoryLayout.size(ofValue: uniformData[0])
+    for _ in 0...255
+    { 
+      let uniformBuffer = device.makeBuffer(bytes: uniformData, length: dataSize, options: [])!
+      let uniform_data = (uniformBuffer.contents()).assumingMemoryBound(to:Float.self)
+      texture_list.append(textureList(uniformBuffer:uniformBuffer, uniform_data:uniform_data, image:pixel_image))
+    }
+
+    self.clearWin();
+  }
+
+
+  public func clearWin()
+  {
+	/// discard previous put_images, doClear become first operation in next render pass.
+	var i = 0
+	while i < texture_list_count
+	{
+		texture_list[i].image.onGPU -= 1
+		i += 1
+	}
+	texture_list_count = 0
+	doClear = true
+	///  next flush images should call draw(), even if there is no image to put
+  }
+
+  func flushPixels()
+  {
+	if (pixel_count > 0)
+	{
+	  pixel_count = 0
+	  self.putImage(image:pixel_image, x:0, y:0)
+	}
+  }
+
+  public func flushImages()
+  {
+	flushPixels()
+	if (texture_list_count > 0 || doClear)
+	 {
+	    self.draw()
+	 }
+  }
+
+  public func waitForGPU()
+  {
+	while (GPUbatch > 0) { }
+  }
+
+
+  public func pixelPut(_ x:Int32, _ y:Int32, _ color:UInt32)
+  {
+	if (pixel_count == 0)
+	{
+	  while (pixel_image.onGPU > 0)
+	  {
+	     if (GPUbatch > 0) { waitForGPU() }
+	     else { flushImages() }
+	  }
+	  for i in 0...pixel_image.texture_height*pixel_image.texture_sizeline/4-1
+	    { pixel_image.texture_data[i] = UInt32(0xFF000000) }
+	}
+	let t = (x&(Int32(vrect.size.width-1)-x))&(y&(Int32(vrect.size.height-1)-y))
+	if t >= 0
+	{
+		pixel_image.texture_data[Int(y)*pixel_image.texture_sizeline/4+Int(x)] = color
+		pixel_count += 1
+	}
+  }
+
+  public func putImage(image img:MlxImg, x posx:Int32, y posy:Int32)
+  {
+	flushPixels()
+	putImageScale(image:img, sx:0, sy:0, sw:Int32(img.texture_width), sh:Int32(img.texture_height), 
+			   dx:posx, dy:posy, dw:Int32(img.texture_width), dh:Int32(img.texture_height),
+			   c:UInt32(0xFFFFFFFF))
+  }
+
+  public func putImageScale(image img:MlxImg, sx src_x:Int32, sy src_y:Int32, sw src_w:Int32, sh src_h:Int32, dx dest_x:Int32, dy dest_y:Int32, dw dest_w:Int32, dh dest_h:Int32, c color:UInt32)
+  {
+	flushPixels()
+	if (texture_list_count == 0) /// means  I just draw
+	{
+		waitForGPU()    /// to be able to write again in uniforms
+	}
+	texture_list[texture_list_count].uniform_data[0] = Float(img.texture_width)
+	texture_list[texture_list_count].uniform_data[1] = Float(img.texture_height)
+	texture_list[texture_list_count].uniform_data[2] = Float(src_x)
+	texture_list[texture_list_count].uniform_data[3] = Float(src_y)
+	texture_list[texture_list_count].uniform_data[4] = Float(src_w)
+	texture_list[texture_list_count].uniform_data[5] = Float(src_h)
+
+	texture_list[texture_list_count].uniform_data[8] = Float(dest_x)
+	texture_list[texture_list_count].uniform_data[9] = Float(dest_y)
+	texture_list[texture_list_count].uniform_data[10] = Float(dest_w)
+	texture_list[texture_list_count].uniform_data[11] = Float(dest_h)
+
+	texture_list[texture_list_count].uniform_data[12] = Float((color>>16)&0xFF)/255.0;
+	texture_list[texture_list_count].uniform_data[13] = Float((color>>8)&0xFF)/255.0;
+	texture_list[texture_list_count].uniform_data[14] = Float((color>>0)&0xFF)/255.0;
+	texture_list[texture_list_count].uniform_data[15] = Float((color>>24)&0xFF)/255.0;
+
+	texture_list[texture_list_count].image = img
+	img.onGPU += 1
+	
+	texture_list_count += 1
+	if (texture_list_count == 255) /// keep 1 slot for put_pixels image
+	{
+		flushImages()
+	}
+  }
+
+
+  func draw()
+  {
+	var commandBuffer = commandQueue.makeCommandBuffer()!
+
+/// clear if asked
+	if (doClear)
+	{
+	  uniq_renderPassDescriptor.colorAttachments[0].loadAction = .clear
+	  let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: uniq_renderPassDescriptor)!
+	  commandEncoder.endEncoding()
+	  uniq_renderPassDescriptor.colorAttachments[0].loadAction = .load
+	  doClear = false
+	}
+
+/// then draw the images if any.
+	var i = 0
+	while i < texture_list_count
+	{
+		let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: uniq_renderPassDescriptor)!
+		commandEncoder.setRenderPipelineState(pipelineState)
+		commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+		commandEncoder.setVertexBuffer(texture_list[i].uniformBuffer, offset: 0, index: 1)
+		commandEncoder.setFragmentTexture(texture_list[i].image.texture, index: 0)
+		commandEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 6, instanceCount:2)
+		commandEncoder.endEncoding()
+		({ j in
+		      commandBuffer.addCompletedHandler { cb in self.texture_list[j].image.onGPU -= 1 }
+		})(i)
+		i += 1
+	}
+	texture_list_count = 0
+	commandBuffer.addCompletedHandler { cb in self.GPUbatch -= 1 }
+        commandBuffer.commit()
+	GPUbatch += 1
+
+/// finally copy to MTLdrawable to present, using a new commandqueue
+    	commandBuffer = commandQueue.makeCommandBuffer()!
+	let curdraw = mlayer.nextDrawable()!
+
+	let commandBEncoder = commandBuffer.makeBlitCommandEncoder()!
+	commandBEncoder.copy(from:drawable_image.texture, sourceSlice:0, sourceLevel:0, sourceOrigin: mtl_origin_null, sourceSize: mtl_size_all,  to:curdraw.texture, destinationSlice:0, destinationLevel:0, destinationOrigin: mtl_origin_null)
+	commandBEncoder.endEncoding()
+
+	commandBuffer.addCompletedHandler { cb in self.GPUbatch -= 1 }
+	commandBuffer.present(curdraw)
+        commandBuffer.commit()
+	GPUbatch += 1
+  }
+
 
 }
 
@@ -302,234 +539,3 @@ fragment float4 basic_fragment_function(VertexOut vIn [[ stage_in ]], texture2d<
 }
 """
 
-struct textureList
-{
-   var uniformBuffer: MTLBuffer!
-   var uniform_data:UnsafeMutablePointer<Float>
-   var texture:MTLTexture
-}
-
-
-class MTKVDelegate: NSObject, MTKViewDelegate
-{
-  var device: MTLDevice
-  var mview: MTKView
-  var commandQueue: MTLCommandQueue!
-  var pipelineState: MTLRenderPipelineState!
-/// 3 params to pipeline
-  var vertexBuffer: MTLBuffer!
-
-///  var uniformBuffer: MTLBuffer!
-///  var uniform_data:UnsafeMutablePointer<Float>
-///  var texture: MTLTexture
-
-  var texture_list: Array<textureList> = Array()
-  var texture_list_count = 0
-
-  var pixel_image:MlxImg
-  var pixel_count:Int
-
-  var drawable_texture: MTLTexture
-
-  var doClear = false
-
-  var GPUbatch = 0
-
-
-
-   init(view: MTKView, device: MTLDevice)
-   {
-    self.mview = view
-    self.device = device
-
-    commandQueue = device.makeCommandQueue()!
-
-    /// vertex buffer & shaders stay the always the same.
-
-    let lib = try! device.makeLibrary(source: shaders, options: nil)
-    let vertexFunction = lib.makeFunction(name: "basic_vertex_function")
-    let fragmentFunction = lib.makeFunction(name: "basic_fragment_function")
-    let pipelineDesc = MTLRenderPipelineDescriptor()
-    pipelineDesc.colorAttachments[0].pixelFormat = .bgra8Unorm
-
-    pipelineDesc.colorAttachments[0].isBlendingEnabled = true
-    pipelineDesc.colorAttachments[0].rgbBlendOperation = .add
-    pipelineDesc.colorAttachments[0].alphaBlendOperation = .add
-    pipelineDesc.colorAttachments[0].sourceRGBBlendFactor = .oneMinusSourceAlpha
-    pipelineDesc.colorAttachments[0].sourceAlphaBlendFactor = .oneMinusSourceAlpha
-    pipelineDesc.colorAttachments[0].destinationRGBBlendFactor = .sourceAlpha
-    pipelineDesc.colorAttachments[0].destinationAlphaBlendFactor = .sourceAlpha
-
-    pipelineDesc.vertexFunction = vertexFunction
-    pipelineDesc.fragmentFunction = fragmentFunction
-    pipelineState = try! device.makeRenderPipelineState(descriptor: pipelineDesc)
-
-    let vertexData: [Float] = [
-       -1.0, -1.0, 0.0, 1.0,  0.0, 1.0, 0.0, 0.0,
-       -1.0, 1.0, 0.0, 1.0,   0.0, 0.0, 0.0, 0.0,
-       1.0, -1.0, 0.0, 1.0,   1.0, 1.0, 0.0, 0.0,
-       1.0, -1.0, 0.0, 1.0,   1.0, 1.0, 0.0, 0.0,
-       -1.0, 1.0, 0.0, 1.0,   0.0, 0.0, 0.0, 0.0,
-       1.0, 1.0, 0.0, 1.0,    1.0, 0.0, 0.0, 0.0  ]
-    var dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0])
-    vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: []) 
-
-    let vrect = view.frame
-
-    drawable_texture = view.currentDrawable!.texture
-
-    pixel_image = MlxImg(d: device, w:Int(vrect.size.width), h:Int(vrect.size.height))
-    for i in 0...(pixel_image.texture_height*pixel_image.texture_sizeline/4-1)
-      { pixel_image.texture_data[i] = UInt32(0xFF000000) }
-    pixel_count = 0
-
-    let uniformData: [Float] = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Float(vrect.size.width), Float(vrect.size.height), 0.0, 0.0, 0.0, 0.0,
-    		     	       1.0, 1.0, 1.0, 1.0 ]
-    dataSize = uniformData.count * MemoryLayout.size(ofValue: uniformData[0])
-    for _ in 0...255
-    { 
-      let uniformBuffer = device.makeBuffer(bytes: uniformData, length: dataSize, options: [])!
-      let uniform_data = (uniformBuffer.contents()).assumingMemoryBound(to:Float.self)
-      texture_list.append(textureList(uniformBuffer:uniformBuffer, uniform_data:uniform_data, texture:pixel_image.texture)) }
-
-    super.init()
-   }
-
-
-  func clearWin()
-  {
-	doClear = true
-	mview.draw()
-  }
-
-  func pixelPut(_ x:Int32, _ y:Int32, _ color:UInt32)
-  {
-	pixel_image.texture_data[Int(y)*pixel_image.texture_sizeline/4+Int(x)] = color
-	pixel_count += 1
-	if (pixel_count >= 200000)
-	{
-		flushPixels()
-	}
-  }
-
-  func flushPixels()
-  {
-	if (pixel_count > 0)
-	{
-	  
-	  self.putImage(pixel_image, 0, 0)
-	  self.flushImages()
-	  for i in 0...pixel_image.texture_height*pixel_image.texture_sizeline/4-1
-	    { pixel_image.texture_data[i] = UInt32(0xFF000000) }
-	  pixel_count = 0
-	}
-  }
-
-  func flushImages()
-  {
-	if (texture_list_count > 0)
-	 {
-	    mview.draw()
-	  }
-  }
-
-  func putImage(_ img:MlxImg, _ x:Int32, _ y:Int32)
-  {
-	putImageScale(img, 0, 0, Int32(img.texture_width), Int32(img.texture_height), 
-			   x, y, Int32(img.texture_width), Int32(img.texture_height),
-			   UInt32(0xFFFFFFFF))
-  }
-
-  func putImageScale(_ img:MlxImg, _ src_x:Int32, _ src_y:Int32, _ src_w:Int32, _ src_h:Int32, _ dest_x:Int32, _ dest_y:Int32, _ dest_w:Int32, _ dest_h:Int32, _ color:UInt32)
-  {
-	if (texture_list_count == 0) /// means  I just draw
-	{
-		waitForGPU()    /// to be able to write again in uniforms
-	}
-	texture_list[texture_list_count].uniform_data[0] = Float(img.texture_width)
-	texture_list[texture_list_count].uniform_data[1] = Float(img.texture_height)
-	texture_list[texture_list_count].uniform_data[2] = Float(src_x)
-	texture_list[texture_list_count].uniform_data[3] = Float(src_y)
-	texture_list[texture_list_count].uniform_data[4] = Float(src_w)
-	texture_list[texture_list_count].uniform_data[5] = Float(src_h)
-
-	texture_list[texture_list_count].uniform_data[8] = Float(dest_x)
-	texture_list[texture_list_count].uniform_data[9] = Float(dest_y)
-	texture_list[texture_list_count].uniform_data[10] = Float(dest_w)
-	texture_list[texture_list_count].uniform_data[11] = Float(dest_h)
-
-	texture_list[texture_list_count].uniform_data[12] = Float((color>>16)&0xFF)/255.0;
-	texture_list[texture_list_count].uniform_data[13] = Float((color>>8)&0xFF)/255.0;
-	texture_list[texture_list_count].uniform_data[14] = Float((color>>0)&0xFF)/255.0;
-	texture_list[texture_list_count].uniform_data[15] = Float((color>>24)&0xFF)/255.0;
-
-	texture_list[texture_list_count].texture = img.texture
-	texture_list_count += 1
-	if (texture_list_count >= 256)
-	{
-		flushImages()
-	}
-  }
-
-  public func waitForGPU()
-  {
-	while (GPUbatch > 0) { }
-  }
-
-  // 2 delegate MTKView functs
-
-  func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize)
-  {
-
-  }
-
-  func draw(in view: MTKView)
-  {
-	let commandBuffer = commandQueue.makeCommandBuffer()!
-	if let renderPassDescriptor = view.currentRenderPassDescriptor
-	 {
-		renderPassDescriptor.colorAttachments[0].storeAction = .store
-		if (doClear)
-		{
-		  renderPassDescriptor.colorAttachments[0].loadAction = .clear
-                  renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.0, green: 0.0, blue: 0.0, alpha:0.0)
-		  let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)!
-		  commandEncoder.endEncoding()
-		  doClear = false
-		}
-		else
-		{
-
-/// first draw back prev buffer
-		  let commandBEncoder = commandBuffer.makeBlitCommandEncoder()!
-	 	  commandBEncoder.copy(from:drawable_texture, sourceSlice:0, sourceLevel:0, sourceOrigin: MTLOriginMake(0,0,0), sourceSize: MTLSizeMake(drawable_texture.width, drawable_texture.height, 1),  to:view.currentDrawable!.texture, destinationSlice:0, destinationLevel:0, destinationOrigin: MTLOriginMake(0,0,0))
-	 	  commandBEncoder.endEncoding()
-
-
-/// then draw the images
-		  renderPassDescriptor.colorAttachments[0].loadAction = .load
-
-		  var i = 0
-		  while i < texture_list_count
-		  {
-		   let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)!
-		   commandEncoder.setRenderPipelineState(pipelineState)
-		   commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-		   commandEncoder.setVertexBuffer(texture_list[i].uniformBuffer, offset: 0, index: 1)
-		   commandEncoder.setFragmentTexture(texture_list[i].texture, index: 0)
-		   commandEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 6, instanceCount:2)
-		   commandEncoder.endEncoding()
-		   i += 1
-  		  }
-		  texture_list_count = 0
-                }	
-         }
-	commandBuffer.addCompletedHandler { cb in self.GPUbatch -= 1 }
-	commandBuffer.present(view.currentDrawable!)
-        commandBuffer.commit()
-	GPUbatch += 1
-
-	drawable_texture = view.currentDrawable!.texture
-  }
-
-}
