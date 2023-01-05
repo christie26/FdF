@@ -1,6 +1,7 @@
 
-SRC			= video.c
+SRC			= fdf.c draw_line.c fdf_utils.c
 OBJ			= ${SRC:.c=.o}
+DYLIB		= ./mlx/libmlx.dylib
 
 NAME		= fdf
 CC			= cc
@@ -11,15 +12,18 @@ all:		${NAME}
 %.o: 		%.c
 			$(CC) ${CFLAGS} -Imlx -c $< -o $@
 
-$(NAME): 	$(OBJ)
-			$(CC) $(OBJ) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+$(DYLIB):	
+			@make -C ./mlx
+			cp $(DYLIB) .
 
+$(NAME): 	$(OBJ) $(DYLIB)
+			$(CC) $(OBJ) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 clean:
 			${RM} ${OBJ}
-			make clean -C ./mlx
 
 fclean:		clean
 			${RM} ${NAME}
+			make clean -C ./mlx
 
 re:			fclean all
 
