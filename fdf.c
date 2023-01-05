@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 16:52:41 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/05 20:22:20 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/05 22:40:33 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ int	key_hook(int keycode, t_param *param)
 
 int	main(void)
 {
-	t_param	param;
 	int		frame_x;
 	int		frame_y;
-	t_line	line;
+	t_param	param;
+	t_line	*line;
 	t_data	img;
 
 	param.mlx = mlx_init();
@@ -61,24 +61,10 @@ int	main(void)
 		}
 		frame_x += 1;
 	}
-	
-	tmp_set_line(&line, 250, 200, 350, 100);
-	draw_line(img, line, 0x77CCFF);
-	
-	tmp_set_line(&line, 450, 200, 350, 100);
-	draw_line(img, line, 0x77CCFF);
-	
-	tmp_set_line(&line, 450, 200, 250, 400);
-	draw_line(img, line, 0x77CCFF);
-	
-	tmp_set_line(&line, 50, 200, 250, 400);
-	draw_line(img, line, 0x77CCFF);
-	
-	tmp_set_line(&line, 50, 200, 150, 100);
-	draw_line(img, line, 0x77CCFF);
-
-	tmp_set_line(&line, 250, 200, 150, 100);
-	draw_line(img, line, 0x77CCFF);
+	line = (t_line *)malloc(sizeof(t_line *));
+	tmp_set_line(line, 10, 20, 30, 40);
+	printf("set (%d,%d),(%d,%d)\n", line->start->x, line->start->y, line->end->x, line->end->y);
+	draw_line(&img, line, 0x77CCFF);
 
 	mlx_key_hook(param.win, key_hook, &param);
 	mlx_loop(param.mlx);

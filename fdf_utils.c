@@ -6,9 +6,11 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 15:36:08 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/05 16:12:59 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/05 21:52:26 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "fdf.h"
 
 int	ft_abs(int d)
 {
@@ -17,3 +19,27 @@ int	ft_abs(int d)
 	else
 		return (d);
 }
+/*
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*res;
+
+	res = (void *)malloc(count * size);
+	if (!res)
+		return (0);
+	res = ft_memset(res, 0, count * size);
+	return (res);
+}
+
+void	*ft_memset(void *b, int c, size_t len)
+{
+	size_t	i;
+	char	*dst;
+
+	dst = (char *)b;
+	i = 0;
+	while (i < len)
+		dst[i++] = (unsigned char)c;
+	return ((void *)dst);
+}
+*/
