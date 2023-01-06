@@ -15,15 +15,17 @@
 
 void	tmp_set_line(t_line *line, int n1, int n2, int n3, int n4)
 {
-	t_plan	dot1;
-	t_plan	dot2;
+	t_plan	*dot1;
+	t_plan	*dot2;
 
-	dot1.x = n1;
-	dot1.y = n2;
-	dot2.x = n3;
-	dot2.y = n4;
-	line->start = &dot1;
-	line->end = &dot2;
+	dot1 = (t_plan *)malloc(sizeof(t_plan));
+	dot2 = (t_plan *)malloc(sizeof(t_plan));
+	dot1->x = n1;
+	dot1->y = n2;
+	dot2->x = n3;
+	dot2->y = n4;
+	line->start = dot1;
+	line->end = dot2;
 	return ;
 }
 

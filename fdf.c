@@ -61,8 +61,8 @@ int	main(void)
 		}
 		frame_x += 1;
 	}
-	line = (t_line *)malloc(sizeof(t_line *));
-	tmp_set_line(line, 10, 20, 30, 40);
+	line = (t_line *)malloc(sizeof(t_line));
+	tmp_set_line(line, 10, 20, 300, 400);
 	printf("set (%d,%d),(%d,%d)\n", line->start->x, line->start->y, line->end->x, line->end->y);
 	draw_line(&img, line, 0x77CCFF);
 
