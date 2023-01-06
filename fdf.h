@@ -15,20 +15,27 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <mlx.h>
+//# include <mlx.h>
 # include <math.h>
 
 # define ESC 53
+# define PI 3.141592654
 
 typedef struct s_cube {
-	int	x;
-	int	y;
-	int	z;
+	double	x;
+	double	y;
+	double	z;
 }	t_cube;
 
+typedef struct s_view {
+	double	x;
+	double	y;
+	double	z;
+}	t_view;
+
 typedef struct s_plan {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 }	t_plan;
 
 typedef struct s_line {
@@ -51,6 +58,7 @@ typedef struct s_param {
 }	t_param;
 
 int		ft_abs(int d);
+void	set_cube(t_cube *cube, double, x, double y, double z);
 void	*ft_calloc(size_t count, size_t size);
 void	draw_line(t_data *data, t_line *line, int color);
 void	tmp_set_line(t_line *line, int n1, int n2, int n3, int n4);

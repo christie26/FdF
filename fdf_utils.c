@@ -19,6 +19,14 @@ int	ft_abs(int d)
 	else
 		return (d);
 }
+
+void	set_cube(t_cube *cube, double x, double y, double z)
+{
+	cube->x = x;
+	cube->y = y;
+	cube->z = z;
+}
+
 /*
 void	*ft_calloc(size_t count, size_t size)
 {
