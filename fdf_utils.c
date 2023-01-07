@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdio.h>
 
 int	ft_abs(int d)
 {
@@ -20,13 +21,26 @@ int	ft_abs(int d)
 		return (d);
 }
 
-void	set_cube(t_cube *cube, double x, double y, double z)
+void	write_pixel_image(t_data *data, int x, int y, int color)
 {
-	cube->x = x;
-	cube->y = y;
-	cube->z = z;
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
 }
 
+int	key_hook(int keycode, t_param *param)
+{
+	printf("This key's keycode is %d\n", keycode);
+	if (keycode == ESC)
+	{
+		mlx_destroy_window(param->mlx, param->win);
+		exit(EXIT_SUCCESS);
+	}
+	else
+		printf("It's not ESC\n");
+	return (0);
+}
 /*
 void	*ft_calloc(size_t count, size_t size)
 {

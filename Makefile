@@ -1,5 +1,6 @@
 
-SRC			= fdf.c draw_line.c fdf_utils.c
+SRC			= draw_line.c fdf_utils.c\
+			  draw_cube.c convert.c
 OBJ			= ${SRC:.c=.o}
 DYLIB		= ./mlx/libmlx.dylib
 

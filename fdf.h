@@ -15,7 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-//# include <mlx.h>
+# include <mlx.h>
 # include <math.h>
 
 # define ESC 53
@@ -58,11 +58,13 @@ typedef struct s_param {
 }	t_param;
 
 int		ft_abs(int d);
-void	set_cube(t_cube *cube, double, x, double y, double z);
+void	set_cube(t_cube *cube, double x, double y, double z);
 void	*ft_calloc(size_t count, size_t size);
 void	draw_line(t_data *data, t_line *line, int color);
-void	tmp_set_line(t_line *line, int n1, int n2, int n3, int n4);
+t_line	*tmp_set_line(int n1, int n2, int n3, int n4);
 void	write_pixel_image(t_data *data, int x, int y, int color);
-
+t_plan	*convert(t_cube *camera, t_cube *point, t_cube *view);
+int		key_hook(int keycode, t_param *param);
+void	write_pixel_image(t_data *data, int x, int y, int color);
 
 #endif
