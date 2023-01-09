@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:33:06 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/09 16:33:10 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:46:01 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,23 @@ void	main_rotate(t_data *img)
 	t_cube	cube2;
 	t_cube	cube3;
 	t_cube	cube4;
+	t_cube	cube5;
+	t_cube	cube6;
 	t_plan	*plan1;
 	t_plan	*plan2;
 	t_plan	*plan3;
 	t_plan	*plan4;
+	t_plan	*plan5;
+	t_plan	*plan6;
 	double	angle_x;
 	double	angle_y;
 	double	angle_z;
 	int	color;
 
 	color = 0xFFFFFF;
-	angle_x = 45;
+	angle_x = 30;
 	angle_y = 45;
-	angle_z = -45;
+	angle_z = -30;
 	angle_x = angle_x * (PI / 180);
 	angle_y = angle_y * (PI / 180);
 	angle_z = angle_z * (PI / 180);
@@ -91,10 +95,14 @@ void	main_rotate(t_data *img)
 	set_cube(&cube2, 200, 100, 100);
 	set_cube(&cube3, 100, 100, 200);
 	set_cube(&cube4, 200, 100, 200);
+	set_cube(&cube5, 100, 200, 100);
+	set_cube(&cube6, 200, 200, 100);
 	plan1 = rotate3d(&cube1, angle_x, angle_y, angle_z);
 	plan2 = rotate3d(&cube2, angle_x, angle_y, angle_z);
 	plan3 = rotate3d(&cube3, angle_x, angle_y, angle_z);
 	plan4 = rotate3d(&cube4, angle_x, angle_y, angle_z);
+	plan5 = rotate3d(&cube5, angle_x, angle_y, angle_z);
+	plan6 = rotate3d(&cube6, angle_x, angle_y, angle_z);
 
 	printf("plan1=(%.2f,%.2f)\n", plan1->x, plan1->y);
 	printf("plan2=(%.2f,%.2f)\n", plan2->x, plan2->y);
@@ -108,6 +116,9 @@ void	main_rotate(t_data *img)
 	connect_point(img, plan3, plan4, color);
 	connect_point(img, plan1, plan3, color);
 	connect_point(img, plan2, plan4, color);
+	connect_point(img, plan1, plan5, color);
+	connect_point(img, plan2, plan6, color);
+	connect_point(img, plan5, plan6, color);
 
 }
 
