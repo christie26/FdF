@@ -1,6 +1,7 @@
 #include "fdf.h"
 #include <stdio.h>
 
+//convert by camera
 t_plan	*convert(t_cube *camera, t_cube *point, t_cube *view)
 {
 	t_cube	*d;

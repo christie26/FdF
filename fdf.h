@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 20:13:34 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/05 22:35:41 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:55:56 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,13 @@ typedef struct s_param {
 int		ft_abs(int d);
 void	set_cube(t_cube *cube, double x, double y, double z);
 void	*ft_calloc(size_t count, size_t size);
-void	draw_line(t_data *data, t_line *line, int color);
-t_line	*tmp_set_line(int n1, int n2, int n3, int n4);
+//void	draw_line(t_data *data, t_line *line, int color);
+//t_line	*tmp_set_line(int n1, int n2, int n3, int n4);
 void	write_pixel_image(t_data *data, int x, int y, int color);
 t_plan	*convert(t_cube *camera, t_cube *point, t_cube *view);
 int		key_hook(int keycode, t_param *param);
 void	write_pixel_image(t_data *data, int x, int y, int color);
+void	main_rotate(t_data *img);
+void	connect_point(t_data *data, t_plan *point1, t_plan *point2, int color);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 15:36:08 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/05 21:52:26 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:54:36 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ int	key_hook(int keycode, t_param *param)
 	else
 		printf("It's not ESC\n");
 	return (0);
+}
+
+void	set_cube(t_cube *cube, double x, double y, double z)
+{
+	cube->x = x;
+	cube->y = y;
+	cube->z = z;
 }
 /*
 void	*ft_calloc(size_t count, size_t size)

@@ -66,7 +66,7 @@ void	draw_cube(t_data *img)
 */
 	
 }
-
+/*
 int main(void)
 {
 	t_param	param;
@@ -83,3 +83,4 @@ int main(void)
 	mlx_key_hook(param.win, key_hook, &param);
 	mlx_loop(param.mlx);
 }
+*/
