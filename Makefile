@@ -2,8 +2,8 @@
 SRC			= connect_point.c \
 			  fdf_utils.c \
 			  main.c \
-			  main_rotate.c \
-###			  draw_cube.c convert.c
+			  main_rotate.c 
+
 OBJ			= ${SRC:.c=.o}
 DYLIB		= ./mlx/libmlx.dylib
 

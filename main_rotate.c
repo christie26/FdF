@@ -20,6 +20,7 @@ t_cube	*rotation_z(double angle, t_cube *cube)
 	rotation->x = cube->x * cos(angle) + cube->y * sin(angle);
 	rotation->y = cube->x * -sin(angle) + cube->y * cos(angle);
 	rotation->z = cube->z;
+	free(cube);
 	return (rotation);
 }
 
@@ -30,6 +31,7 @@ t_cube	*rotation_y(double angle, t_cube *cube)
 	rotation->x = cube->x * cos(angle) - cube->z * sin(angle);
 	rotation->y = cube->y;
 	rotation->z = cube->x * sin(angle) + cube->z * cos(angle);
+	free(cube);
 	return (rotation);
 }
 
@@ -41,56 +43,100 @@ t_cube	*rotation_x(double angle, t_cube *cube)
 	rotation->x = cube->x;
 	rotation->y = cube->y * cos(angle) + cube->z * sin(angle);
 	rotation->z = cube->y * -sin(angle) + cube->z * cos(angle);
+	free(cube);
 	return (rotation);
 }
-
-t_plan	*projection(t_cube *cube)
+/*
+void	projection(t_cube *cube, t_plan *plan)
 {
-	t_plan	*result;
-	result = (t_plan *)malloc(sizeof(t_plan));
 	result->x = cube->x;
+//	result->x = 100 + 100 * cube->x;
+//	result->y = 100 + 100 * cube->y;
 	result->y = cube->y;
+	printf("(%f,%f)\n", result->x, result->y);
 	return (result);
 }
-
-t_plan	*rotate3d(t_cube *origin, double angle_x, double angle_y, double angle_z)
+*/
+void	rotate3d(t_cube *origin, t_plan	*project, double angle_x, double angle_y, double angle_z)
 {
 	t_cube	*rotated;
-	t_plan	*projected;
 
+	printf("origin(%f,%f,%f)\n", origin->x, origin->y, origin->z);
 	rotated = rotation_x(angle_x, origin);
 	rotated = rotation_y(angle_y, rotated);
 	rotated = rotation_z(angle_z, rotated);
-	projected = projection(rotated);
-	return (projected);
+	printf("rotated(%f,%f,%f)\n", rotated->x, rotated->y, rotated->z);
+	project->x = rotated->x;
+	project->y = rotated->y;
+	return ;
 }
 
 void	main_rotate(t_data *img)
 {
+/*
 	t_cube	cube1;
 	t_cube	cube2;
 	t_cube	cube3;
 	t_cube	cube4;
 	t_cube	cube5;
 	t_cube	cube6;
+//	t_cube	cube7;
+//	t_cube	cube8;
 	t_plan	*plan1;
 	t_plan	*plan2;
 	t_plan	*plan3;
 	t_plan	*plan4;
 	t_plan	*plan5;
 	t_plan	*plan6;
-	double	angle_x;
-	double	angle_y;
-	double	angle_z;
-	int	color;
+//	t_plan	*plan7;
+//	t_plan	*plan8; 	
+*/
+	t_cube	**cube_set;
+	t_plan	**plan_set;
+	t_angle	angle;
+	double	color;
+	int	i;
 
+	cube_set = (t_cube **)malloc(sizeof(t_cube *) * 9);
+	plan_set = (t_plan **)malloc(sizeof(t_plan *) * 9);
+	i = 0;
+	while (i++ < 8)
+	{
+		cube_set[i] = (t_cube *)malloc(sizeof(t_cube));
+		plan_set[i] = (t_plan *)malloc(sizeof(t_plan));	
+	}
+	printf("check1\n");
 	color = 0xFFFFFF;
-	angle_x = 30;
-	angle_y = 45;
-	angle_z = -30;
-	angle_x = angle_x * (PI / 180);
-	angle_y = angle_y * (PI / 180);
-	angle_z = angle_z * (PI / 180);
+	angle.x = 0;
+	angle.y = 0;
+	angle.z = 0;
+	printf("check4\n");
+	angle.x = angle.x * (PI / 180);
+	angle.y = angle.y * (PI / 180);
+	angle.z = angle.z * (PI / 180);
+	printf("check5\n");
+	i = 0;
+	while (i < 8)
+	{
+		printf("check1\n");
+	//	set_cube(cube_set[i], 100 * (i % 2), 100 * ((i % 4) / 2), 100 * (i / 4));
+		(cube_set[i])->x = i % 2;
+		(cube_set[i])->y = (i % 4) / 2;
+		(cube_set[i])->z = i / 4;
+		printf("check2\n");
+		rotate3d(cube_set[i], plan_set[i], angle.x, angle.y, angle.z);
+		printf("check3\n");
+		i++;
+	}
+	i = 0;
+	while (i++ < 8)
+	{
+		write_pixel_image(img, (*plan_set)->x, (*plan_set)->y, color);
+		(*plan_set)++;
+	}
+	
+	
+/*
 	set_cube(&cube1, 100, 100, 100);
 	set_cube(&cube2, 200, 100, 100);
 	set_cube(&cube3, 100, 100, 200);
@@ -108,10 +154,7 @@ void	main_rotate(t_data *img)
 	printf("plan2=(%.2f,%.2f)\n", plan2->x, plan2->y);
 	printf("plan3=(%.2f,%.2f)\n", plan3->x, plan3->y);
 	printf("plan4=(%.2f,%.2f)\n\n", plan4->x, plan4->y);
-//	write_pixel_image(img, plan1->x, plan1->y, 0xFFFFFF);
-//	write_pixel_image(img, plan2->x, plan2->y, 0xFFFFFF);
-//	write_pixel_image(img, plan3->x, plan3->y, 0xFFFFFF);
-//	write_pixel_image(img, plan4->x, plan4->y, 0xFFFFFF);
+	
 	connect_point(img, plan1, plan2, color);
 	connect_point(img, plan3, plan4, color);
 	connect_point(img, plan1, plan3, color);
@@ -119,6 +162,6 @@ void	main_rotate(t_data *img)
 	connect_point(img, plan1, plan5, color);
 	connect_point(img, plan2, plan6, color);
 	connect_point(img, plan5, plan6, color);
-
+*/
 }
 

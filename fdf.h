@@ -51,6 +51,12 @@ typedef struct s_data {
 	int		endian;
 }	t_data;
 
+typedef struct s_angle {
+	double	x;
+	double	y;
+	double	z;
+}	t_angle;
+
 typedef struct s_param {
 	void	*mlx;
 	void	*win;
