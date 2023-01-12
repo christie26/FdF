@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   connect_point.c                                    :+:      :+:    :+:   */
+/*   draw_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/09 15:09:48 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/09 16:31:49 by yoonsele         ###   ########.fr       */
+/*   Created: 2023/01/12 15:14:28 by yoonsele          #+#    #+#             */
+/*   Updated: 2023/01/12 15:41:16 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdio.h>
 
 void	draw_line_x(t_data *data, t_plan *point1, t_plan *point2, int color);
 void	draw_line_y(t_data *data, t_plan *point1, t_plan *point2, int color);
 
-void	connect_point(t_data *data, t_plan *point1, t_plan *point2, int color)
+void	draw_line(t_data *data, t_plan *point1, t_plan *point2, int color)
 {
-	double	dx;
-	double	dy;
+	int	dx;
+	int	dy;
 
-	point1->x = (int)(point1->x);
-	point1->y = (int)(point1->y);
-	point2->x = (int)(point2->x);
-	point2->y = (int)(point2->y);
 	dx = point1->x - point2->x;
 	dy = point1->y - point2->y;
 	if (ft_abs(dx) > ft_abs(dy))
@@ -34,11 +31,11 @@ void	connect_point(t_data *data, t_plan *point1, t_plan *point2, int color)
 
 void	draw_line_x(t_data *data, t_plan *point1, t_plan *point2, int color)
 {
-	double	dx;
-	double	dy;
-	double	x;
-	double	y;
-	double	d;
+	int	dx;
+	int	dy;
+	int	x;
+	int	y;
+	int	d;
 
 	dx = point2->x - point1->x;
 	dy = point2->y - point1->y;
@@ -70,11 +67,11 @@ void	draw_line_x(t_data *data, t_plan *point1, t_plan *point2, int color)
 
 void	draw_line_y(t_data *data, t_plan *point1, t_plan *point2, int color)
 {
-	double	dx;
-	double	dy;
-	double	xx;
-	double	yy;
-	double	d;
+	int	dx;
+	int	dy;
+	int	xx;
+	int	yy;
+	int	d;
 
 	dx = point2->x - point1->x;
 	dy = point2->y - point1->y;

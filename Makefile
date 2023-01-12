@@ -1,8 +1,12 @@
 
-SRC			= connect_point.c \
-			  fdf_utils.c \
-			  main.c \
-			  main_rotate.c 
+SRCDIR		= ./src
+GNLDIR		= ./gnl
+SRC			= $(SRCDIR)/draw_line.c \
+			  $(SRCDIR)/fdf_utils.c \
+			  $(SRCDIR)/main.c \
+			  $(SRCDIR)/rotate.c \
+			  $(GNLDIR)/get_next_line.c \
+			  $(GNLDIR)/get_next_line_utils.c
 
 OBJ			= ${SRC:.c=.o}
 DYLIB		= ./mlx/libmlx.dylib

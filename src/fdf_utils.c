@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 15:36:08 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/09 15:54:36 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:36:34 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,6 @@ int	key_hook(int keycode, t_param *param)
 	return (0);
 }
 
-void	set_cube(t_cube *cube, double x, double y, double z)
-{
-//	cube = (t_cube *)malloc(sizeof(t_cube));
-	printf("(%f,%f,%f)\n",x,y,z);
-	cube->x = x;
-	cube->y = y;
-	cube->z = z;
-	printf("(%f,%f,%f)\n",x,y,z);
-}
 /*
 void	*ft_calloc(size_t count, size_t size)
 {
