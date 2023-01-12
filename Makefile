@@ -9,7 +9,7 @@ DYLIB		= ./mlx/libmlx.dylib
 
 NAME		= fdf
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror 
 
 all:		${NAME}
 

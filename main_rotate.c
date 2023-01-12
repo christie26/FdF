@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:33:06 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/09 16:46:01 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:59:31 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_cube	*rotation_z(double angle, t_cube *cube)
 	rotation->x = cube->x * cos(angle) + cube->y * sin(angle);
 	rotation->y = cube->x * -sin(angle) + cube->y * cos(angle);
 	rotation->z = cube->z;
-	free(cube);
+	//free(cube);
 	return (rotation);
 }
 
@@ -31,7 +31,7 @@ t_cube	*rotation_y(double angle, t_cube *cube)
 	rotation->x = cube->x * cos(angle) - cube->z * sin(angle);
 	rotation->y = cube->y;
 	rotation->z = cube->x * sin(angle) + cube->z * cos(angle);
-	free(cube);
+	//free(cube);
 	return (rotation);
 }
 
@@ -43,31 +43,25 @@ t_cube	*rotation_x(double angle, t_cube *cube)
 	rotation->x = cube->x;
 	rotation->y = cube->y * cos(angle) + cube->z * sin(angle);
 	rotation->z = cube->y * -sin(angle) + cube->z * cos(angle);
-	free(cube);
+	//free(cube);
 	return (rotation);
 }
-/*
-void	projection(t_cube *cube, t_plan *plan)
-{
-	result->x = cube->x;
-//	result->x = 100 + 100 * cube->x;
-//	result->y = 100 + 100 * cube->y;
-	result->y = cube->y;
-	printf("(%f,%f)\n", result->x, result->y);
-	return (result);
-}
-*/
+
 void	rotate3d(t_cube *origin, t_plan	*project, double angle_x, double angle_y, double angle_z)
 {
 	t_cube	*rotated;
 
-	printf("origin(%f,%f,%f)\n", origin->x, origin->y, origin->z);
-	rotated = rotation_x(angle_x, origin);
-	rotated = rotation_y(angle_y, rotated);
+	origin->x = origin->x - 0.5;
+	origin->y = origin->y - 0.5;
+	origin->z = origin->z - 0.5;
+//	printf("(%.2f,%.2f,%.2f)\n", origin->x, origin->y, origin->z);
+	rotated = rotation_y(angle_y, origin);
+	rotated = rotation_x(angle_x, rotated);
 	rotated = rotation_z(angle_z, rotated);
-	printf("rotated(%f,%f,%f)\n", rotated->x, rotated->y, rotated->z);
-	project->x = rotated->x;
-	project->y = rotated->y;
+//	printf("rotated(%f,%f,%f)\n", rotated->x, rotated->y, rotated->z);
+	project->x = 200 + 100 * rotated->x;
+	project->y = 200 + 100 * rotated->y;
+//	printf("project(%f,%f)\n", project->x, project->y);
 	return ;
 }
 
@@ -82,45 +76,55 @@ void	main_rotate(t_data *img)
 	cube_set = (t_cube **)malloc(sizeof(t_cube *) * 9);
 	plan_set = (t_plan **)malloc(sizeof(t_plan *) * 9);
 	i = 0;
-	while (i++ < 8)
+	while (i < 8)
 	{
-		*cube_set = (t_cube *)malloc(sizeof(t_cube));
-		*plan_set = (t_plan *)malloc(sizeof(t_plan));
-		(*cube_set)++;
-		(*plan_set)++;
+		cube_set[i] = (t_cube *)malloc(sizeof(t_cube));
+		plan_set[i] = (t_plan *)malloc(sizeof(t_plan));
+		i++;
 	}
-	(*cube_set)->x = i % 2;
-	printf("check1\n");
+	
 	color = 0xFFFFFF;
-	angle.x = 0;
-	angle.y = 0;
+	angle.x = 20;
+	angle.y = 45;
 	angle.z = 0;
-	printf("check2\n");
 	angle.x = angle.x * (PI / 180);
 	angle.y = angle.y * (PI / 180);
 	angle.z = angle.z * (PI / 180);
-	printf("check3\n");
 	i = 0;
 	while (i < 8)
 	{
-		printf("check1\n");
-	//	set_cube(cube_set[i], 100 * (i % 2), 100 * ((i % 4) / 2), 100 * (i / 4));
-		
-		(cube_set[i])->x = i % 2;
-		(cube_set[i])->y = (i % 4) / 2;
-		(cube_set[i])->z = i / 4;
-		printf("check2\n");
+	//	cube_set[i] = (t_cube *)malloc(sizeof(t_cube));
+	//	plan_set[i] = (t_plan *)malloc(sizeof(t_plan));
+	//	printf("check2\n");
+		(cube_set[i])->x = (double)(i % 2);
+		(cube_set[i])->y = (double)((i % 4) / 2);
+		(cube_set[i])->z = (double)(i / 4);
+//		printf("i=%d (%.2f,%.2f,%.2f)\n", i, cube_set[i]->x, cube_set[i]->y, cube_set[i]->z);
+	//	printf("check3\n");
 		rotate3d(cube_set[i], plan_set[i], angle.x, angle.y, angle.z);
-		printf("check3\n");
+	//	printf("check4\n");
 		i++;
 	}
 	i = 0;
-	while (i++ < 8)
+	while (i < 8)
 	{
-		write_pixel_image(img, (*plan_set)->x, (*plan_set)->y, color);
-		(*plan_set)++;
+		write_pixel_image(img, (plan_set[i])->x, (plan_set[i])->y, color);
+	//	printf("write (%f,%f)\n",(plan_set[i])->x, (plan_set[i])->y);
+		i++;
 	}
-	
+	i = 0;
+	while (i < 4)
+	{
+		connect_point(img, plan_set[2 * i], plan_set[2 * i + 1], color);
+		connect_point(img, plan_set[i], plan_set[i + 4], color);
+		if (i < 2)
+			connect_point(img, plan_set[i], plan_set[i + 2], color);
+		else
+			connect_point(img, plan_set[i + 2], plan_set[i + 4], color);
+		i++;
+		//	connect_point(img, plan_set[2i], plan_set[2i + 4], color);
+	}
+
 	
 /*
 	set_cube(&cube1, 100, 100, 100);
