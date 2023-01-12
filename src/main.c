@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 15:45:01 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/12 17:25:10 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:02:43 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,21 @@
 int main(int ac, char **av)
 {
 	t_param	param;
-	t_data	img;
+	t_image	img;
 	int		fd;
 	char	*buf;
+	char	**tab;
+	t_map	map;
 
 	if (ac != 2)
 	{
-		perror("Error: ");
+		perror("Error : ");
 		return(-1);
 	}
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 	{
-		perror("Error: ");
+		perror("Error : ");
 		return(-1);
 	}
 	param.mlx = mlx_init();
@@ -39,10 +41,24 @@ int main(int ac, char **av)
 	
 	buf = get_next_line(fd);
 	printf("buf is %s\n", buf);
+	tab = ft_split(buf, ' ');
+	map.width = get_width(tab);
+	printf("map.width is %d\n", map.width);
+	map.height = 0;
+	// convert tab -> array of cube
+	while (buf)
+	{
+		tab = ft_split(buf, ' ');
+		if (get_width(tab) != map.width)
+			perror("Error : ");
+		map.height++;
+		printf("map.height is %d\n", map.height);
+		buf = get_next_line(fd);
+	}
+	printf("final map.height is %d\n", map.height);
 	
-	// map info -> width, height 
 	// keep getting next line, while checking map valid
-	//
+
 
 
 	main_rotate(&img);

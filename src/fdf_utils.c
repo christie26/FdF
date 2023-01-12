@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 15:36:08 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/12 15:36:34 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:29:23 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int	ft_abs(int d)
 		return (d);
 }
 
-void	write_pixel_image(t_data *data, int x, int y, int color)
+void	write_pixel_image(t_image *image, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	dst = image->addr + (y * image->line_length + x * (image->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 

@@ -4,7 +4,9 @@ GNLDIR		= ./gnl
 SRC			= $(SRCDIR)/draw_line.c \
 			  $(SRCDIR)/fdf_utils.c \
 			  $(SRCDIR)/main.c \
+			  $(SRCDIR)/ft_split.c \
 			  $(SRCDIR)/rotate.c \
+			  $(SRCDIR)/map_valid.c \
 			  $(GNLDIR)/get_next_line.c \
 			  $(GNLDIR)/get_next_line_utils.c
 

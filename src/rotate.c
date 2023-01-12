@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:33:06 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/12 15:41:10 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:31:27 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	rotate3d(t_cube *origin, t_plan	*project, double angle_x, double angle_y, d
 	return ;
 }
 
-void	main_rotate(t_data *img)
+void	main_rotate(t_image *img)
 {
 	t_cube	**cube_set;
 	t_plan	**plan_set;
