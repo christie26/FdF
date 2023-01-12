@@ -73,24 +73,6 @@ void	rotate3d(t_cube *origin, t_plan	*project, double angle_x, double angle_y, d
 
 void	main_rotate(t_data *img)
 {
-/*
-	t_cube	cube1;
-	t_cube	cube2;
-	t_cube	cube3;
-	t_cube	cube4;
-	t_cube	cube5;
-	t_cube	cube6;
-//	t_cube	cube7;
-//	t_cube	cube8;
-	t_plan	*plan1;
-	t_plan	*plan2;
-	t_plan	*plan3;
-	t_plan	*plan4;
-	t_plan	*plan5;
-	t_plan	*plan6;
-//	t_plan	*plan7;
-//	t_plan	*plan8; 	
-*/
 	t_cube	**cube_set;
 	t_plan	**plan_set;
 	t_angle	angle;
@@ -102,24 +84,28 @@ void	main_rotate(t_data *img)
 	i = 0;
 	while (i++ < 8)
 	{
-		cube_set[i] = (t_cube *)malloc(sizeof(t_cube));
-		plan_set[i] = (t_plan *)malloc(sizeof(t_plan));	
+		*cube_set = (t_cube *)malloc(sizeof(t_cube));
+		*plan_set = (t_plan *)malloc(sizeof(t_plan));
+		(*cube_set)++;
+		(*plan_set)++;
 	}
+	(*cube_set)->x = i % 2;
 	printf("check1\n");
 	color = 0xFFFFFF;
 	angle.x = 0;
 	angle.y = 0;
 	angle.z = 0;
-	printf("check4\n");
+	printf("check2\n");
 	angle.x = angle.x * (PI / 180);
 	angle.y = angle.y * (PI / 180);
 	angle.z = angle.z * (PI / 180);
-	printf("check5\n");
+	printf("check3\n");
 	i = 0;
 	while (i < 8)
 	{
 		printf("check1\n");
 	//	set_cube(cube_set[i], 100 * (i % 2), 100 * ((i % 4) / 2), 100 * (i / 4));
+		
 		(cube_set[i])->x = i % 2;
 		(cube_set[i])->y = (i % 4) / 2;
 		(cube_set[i])->z = i / 4;
