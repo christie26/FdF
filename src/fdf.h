@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 20:13:34 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/12 17:59:03 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:17:11 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ void	draw_line(t_image *data, t_plan *point1, t_plan *point2, int color);
 char	*get_next_line(int fd);
 size_t	ft_strlen(const char *str);
 char	**ft_split(char const *s, char c);
-int		get_width(char **tab);
+int		ft_atoi(const char *str);
+int		get_width(char *buf);
+void	make_cube(t_cube *cube_set, char **tab, t_map map);
+void	rotate3d(t_cube *origin, t_plan	*project, double angle_x, double angle_y, double angle_z);
+char	*ft_strjoin(char *s1, char *s2);
+char	**read_map(int fd, t_map *map);
 
 #endif

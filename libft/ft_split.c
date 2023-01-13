@@ -6,11 +6,11 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 18:57:22 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/12 17:50:10 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:14:03 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
 static char	*free_table(char **table, int idx_tab)
 {

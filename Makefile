@@ -1,12 +1,14 @@
 
 SRCDIR		= ./src
 GNLDIR		= ./gnl
+LIBDIR		= ./libft
 SRC			= $(SRCDIR)/draw_line.c \
 			  $(SRCDIR)/fdf_utils.c \
 			  $(SRCDIR)/main.c \
-			  $(SRCDIR)/ft_split.c \
 			  $(SRCDIR)/rotate.c \
 			  $(SRCDIR)/map_valid.c \
+			  $(LIBDIR)/ft_split.c \
+			  $(LIBDIR)/ft_atoi.c \
 			  $(GNLDIR)/get_next_line.c \
 			  $(GNLDIR)/get_next_line_utils.c
 

@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:33:06 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/12 17:31:27 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:44:14 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,53 @@
 
 void	rotation_z(double angle, t_cube *cube)
 {
-	cube->x = cube->x * cos(angle) + cube->y * sin(angle);
-	cube->y = cube->x * -sin(angle) + cube->y * cos(angle);
-	cube->z = cube->z;
+	double	x;
+	double	y;
+
+	x = cube->x;
+	y = cube->y;
+	cube->x = x * cos(angle) + y * sin(angle);
+	cube->y = x * -sin(angle) + y * cos(angle);
 	return ;
 }
 
 void	rotation_y(double angle, t_cube *cube)
 {
-	cube->x = cube->x * cos(angle) - cube->z * sin(angle);
-	cube->y = cube->y;
-	cube->z = cube->x * sin(angle) + cube->z * cos(angle);
+	double	x;
+	double	z;
+
+	x = cube->x;
+	z = cube->z;
+	cube->x = x * cos(angle) - z * sin(angle);
+	cube->z = x * sin(angle) + z * cos(angle);
 	return ;
 }
 
 void	rotation_x(double angle, t_cube *cube)
 {
-	cube->x = cube->x;
-	cube->y = cube->y * cos(angle) + cube->z * sin(angle);
-	cube->z = cube->y * -sin(angle) + cube->z * cos(angle);
+	double	y;
+	double	z;
+
+	y = cube->y;
+	z = cube->z;
+	cube->y = y * cos(angle) + z * sin(angle);
+	cube->z = y * -sin(angle) + z * cos(angle);
 	return ;
 }
 
 void	rotate3d(t_cube *origin, t_plan	*project, double angle_x, double angle_y, double angle_z)
 {
+	printf("(%.f,%.f,%.f)\n", origin->x, origin->y, origin->z);
 	rotation_y(angle_y, origin);
 	rotation_x(angle_x, origin);
 	rotation_z(angle_z, origin);
 	project->x =  (int)(100 * origin->x);
 	project->y =  (int)(100 * origin->y);
-	printf("plan (%d,%d)\n", project->x, project->y);
+	printf(" -> (%d,%d)\n", project->x, project->y);
 	return ;
 }
 
+// have to make new function work like this 
 void	main_rotate(t_image *img)
 {
 	t_cube	**cube_set;
@@ -55,8 +69,8 @@ void	main_rotate(t_image *img)
 	t_angle	angle;
 	double	color;
 	int	i;
-
-	//don't have to use double pointer 
+	
+	//don't have to use double pointer
 	cube_set = (t_cube **)malloc(sizeof(t_cube *));
 	plan_set = (t_plan **)malloc(sizeof(t_plan *));
 	i = 0;
