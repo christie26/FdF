@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 15:45:01 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/13 17:28:35 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:32:20 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ int main(int ac, char **av)
 	printf("%d,%d,%d\n", map.width, map.height, map.width*map.height);
 	cube_set = (t_cube *)malloc(sizeof(t_cube) * (map.width * map.height));
 	make_cube(cube_set, tab, map);
-
+	int i;
+	for (i = 0; i < map.width*map.height; i++)
+		printf("(%.f,%.f,%.f)\n",cube_set[i].x,cube_set[i].y, cube_set[i].z);
 	t_angle	angle;
 	angle.x = 20;
 	angle.y = 45;
