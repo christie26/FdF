@@ -49,15 +49,28 @@ void	rotation_x(double angle, t_cube *cube)
 	return ;
 }
 
-void	rotate3d(t_cube *origin, t_plan	*project, double angle_x, double angle_y, double angle_z)
+void	check_limit(t_plan project, t_map *map)
 {
-	printf("(%.f,%.f,%.f)\n", origin->x, origin->y, origin->z);
+	if (project.x > map->width_max)
+		map->width_max = project.x;
+	if (project.x < map->width_min)
+		map->width_min = project.x;
+	if (project.y > map->height_max)
+		map->height_max = project.y;
+	if (project.y < map->height_min)
+		map->height_min = project.y;
+}
+
+void	rotate3d(t_cube *origin, t_plan	*project, double angle_x, double angle_y, double angle_z, t_map *map)
+{
+//	printf("(%.f,%.f,%.f)\n", origin->x, origin->y, origin->z);
 	rotation_y(angle_y, origin);
 	rotation_x(angle_x, origin);
 	rotation_z(angle_z, origin);
-	project->x =  (int)(100 * origin->x);
-	project->y =  (int)(100 * origin->y);
-	printf(" -> (%d,%d)\n", project->x, project->y);
+	project->x =  (int)(10 * origin->x);
+	project->y =  (int)(10 * origin->y);
+	check_limit(*project, map);
+	printf("(%d,%d)\n", project->x, project->y);
 	return ;
 }
 
@@ -93,7 +106,7 @@ void	main_rotate(t_image *img)
 		(cube_set[i])->x = (double)(i % 2);
 		(cube_set[i])->y = (double)((i % 4) / 2);
 		(cube_set[i])->z = (double)(i / 4);
-		rotate3d(cube_set[i], plan_set[i], angle.x, angle.y, angle.z);
+	//	rotate3d(cube_set[i], plan_set[i], angle.x, angle.y, angle.z);
 		printf("planset[%d]=(%d,%d)\n", i, (plan_set[i])->x, (plan_set[i])->y);
 		i++;
 	}

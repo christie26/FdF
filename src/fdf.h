@@ -43,6 +43,10 @@ typedef struct s_angle {
 typedef struct s_map {
 	int	width;
 	int	height;
+	int	width_min;
+	int	width_max;
+	int	height_min;
+	int	height_max;
 }	t_map;
 
 typedef struct s_image {
@@ -72,8 +76,9 @@ char	**ft_split(char const *s, char c);
 int		ft_atoi(const char *str);
 int		get_width(char *buf);
 void	make_cube(t_cube *cube_set, char **tab, t_map map);
-void	rotate3d(t_cube *origin, t_plan	*project, double angle_x, double angle_y, double angle_z);
+void	rotate3d(t_cube *origin, t_plan	*project, double angle_x, double angle_y, double angle_z, t_map *map);
 char	*ft_strjoin(char *s1, char *s2);
 char	**read_map(int fd, t_map *map);
+void	print_center(t_plan *plan_set, t_image *img, int color, t_map map);
 
 #endif

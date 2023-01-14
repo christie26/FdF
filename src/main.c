@@ -35,20 +35,18 @@ int main(int ac, char **av)
 		return(-1);
 	}
 
+	// init mlx 
 	param.mlx = mlx_init();
-	param.win = mlx_new_window(param.mlx, 500, 500, "mlx 42");
-	img.img = mlx_new_image(param.mlx, 500, 500);
+	param.win = mlx_new_window(param.mlx, 1500, 1500, "mlx 42");
+	img.img = mlx_new_image(param.mlx, 1500, 1500);
 	mlx_put_image_to_window (param.mlx, param.win, img.img, 0, 0);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	
 	tab = read_map(fd, &map);
 	
-	printf("%d,%d,%d\n", map.width, map.height, map.width*map.height);
+	printf("width:%d,height:%d,dots:%d\n", map.width, map.height, map.width*map.height);
 	cube_set = (t_cube *)malloc(sizeof(t_cube) * (map.width * map.height));
 	make_cube(cube_set, tab, map);
-	int i;
-	for (i = 0; i < map.width*map.height; i++)
-		printf("(%.f,%.f,%.f)\n",cube_set[i].x,cube_set[i].y, cube_set[i].z);
 	t_angle	angle;
 	angle.x = 20;
 	angle.y = 45;
@@ -57,8 +55,12 @@ int main(int ac, char **av)
 	color = 0xFFFFFF;
 
 	plan_set = (t_plan *)malloc(sizeof(t_plan) * (map.width * map.height));
-
-//	main_rotate(&img);
+	int	i;
+	i = -1;	
+	while (++i < map.width * map.height)
+		rotate3d(&(cube_set[i]), &(plan_set[i]), angle.x, angle.y, angle.z, &map);
+	printf("%d~%d, %d~%d\n",map.width_min, map.width_max, map.height_min, map.height_max);
+	print_center(plan_set, &img, color, map);
 	mlx_key_hook(param.win, key_hook, &param);
 	mlx_loop(param.mlx);
 }

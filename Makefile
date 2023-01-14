@@ -7,6 +7,7 @@ SRC			= $(SRCDIR)/draw_line.c \
 			  $(SRCDIR)/main.c \
 			  $(SRCDIR)/rotate.c \
 			  $(SRCDIR)/map_valid.c \
+			  $(SRCDIR)/print_center.c \
 			  $(LIBDIR)/ft_split.c \
 			  $(LIBDIR)/ft_atoi.c \
 			  $(GNLDIR)/get_next_line.c \

@@ -15,13 +15,18 @@
 int	get_width(char *buf)
 {
 	int	width;
+	int	i;
 
+	i = 0;
 	width = 0;
-	while (*buf)
+	if (buf[i] != ' ')
+		width++;
+	i++;
+	while (i < (int)ft_strlen(buf))
 	{
-		if (*buf == ' ')
+		if (buf[i] != ' ' && buf[i - 1] == ' ' && buf[i] != '\n')
 			width++;
-		buf++;
+		i++;
 	}
 	return (width);
 }
@@ -47,6 +52,10 @@ char	**read_map(int fd, t_map *map)
 		storage = ft_strjoin(storage, buf); //free
 	}
 	tab = ft_split(storage, '\n');
+	map->width_min = 0;
+	map->width_max = 0;
+	map->height_min = 0;
+	map->height_max = 0;
 	return (tab);
 }
 
