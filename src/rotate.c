@@ -67,10 +67,10 @@ void	rotate3d(t_cube *origin, t_plan	*project, double angle_x, double angle_y, d
 	rotation_y(angle_y, origin);
 	rotation_x(angle_x, origin);
 	rotation_z(angle_z, origin);
-	project->x =  (int)(10 * origin->x);
-	project->y =  (int)(10 * origin->y);
+	project->x =  500 + (int)(50 * origin->x);
+	project->y =  500 + (int)(50 * origin->y);
 	check_limit(*project, map);
-	printf("(%d,%d)\n", project->x, project->y);
+//	printf("(%d,%d)\n", project->x, project->y);
 	return ;
 }
 
