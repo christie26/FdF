@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/11 18:46:18 by yoonsele          #+#    #+#             */
-/*   Updated: 2022/11/20 18:47:16 by yoonsele         ###   ########.fr       */
+/*   Created: 2022/11/11 16:00:01 by yoonsele          #+#    #+#             */
+/*   Updated: 2022/11/20 18:45:37 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	char	*dst;
-	size_t	len_s1;
-	size_t	len_s2;
-	size_t	total;
+	unsigned char	*src1;
+	unsigned char	*src2;
+	size_t			i;
 
-	len_s1 = ft_strlen((char *)s1);
-	len_s2 = ft_strlen((char *)s2);
-	total = len_s1 + len_s2;
-	dst = (char *)malloc(sizeof(char) * (total + 1));
-	if (!dst)
+	src1 = (unsigned char *)s1;
+	src2 = (unsigned char *)s2;
+	i = 0;
+	while (i < n && src1[i] == src2[i])
+		i++;
+	if (i == n)
 		return (0);
-	while (len_s1--)
-		*dst++ = *s1++;
-	while (len_s2--)
-		*dst++ = *s2++;
-	*dst = 0;
-	dst -= total;
-	return (dst);
+	return (src1[i] - src2[i]);
 }

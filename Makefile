@@ -1,42 +1,45 @@
 
 SRCDIR		= ./src
-GNLDIR		= ./gnl
-LIBDIR		= ./libft
-SRC			= $(SRCDIR)/draw_line.c \
-			  $(SRCDIR)/fdf_utils.c \
-			  $(SRCDIR)/main.c \
-			  $(SRCDIR)/rotate.c \
-			  $(SRCDIR)/map_valid.c \
-			  $(SRCDIR)/print_center.c \
-			  $(LIBDIR)/ft_split.c \
-			  $(LIBDIR)/ft_atoi.c \
-			  $(GNLDIR)/get_next_line.c \
-			  $(GNLDIR)/get_next_line_utils.c
-
+SRC			= draw_line.c \
+			  fdf_utils.c \
+			  main.c \
+			  rotate.c \
+			  map_valid.c \
+			  print_center.c
+SRC			:= $(addprefix $(SRCDIR)/, $(SRC))
 OBJ			= ${SRC:.c=.o}
-DYLIB		= ./mlx/libmlx.dylib
 
+DYLIB		= ./mlx/libmlx.dylib
 NAME		= fdf
+
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror 
+CFLAGS		= -Wall -Wextra -Werror -O3 -ffast-math
+RM			= rm -f
 
 all:		${NAME}
 
 %.o: 		%.c
-			$(CC) ${CFLAGS} -Imlx -c $< -o $@
+			$(CC) ${CFLAGS} -c $< -o $@
 
 $(DYLIB):	
 			@make -C ./mlx
 			cp $(DYLIB) .
 
-$(NAME): 	$(OBJ) $(DYLIB)
-			$(CC) $(OBJ) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+$(NAME): 	$(OBJ) $(DYLIB) libft
+			$(CC) $(OBJ) -L./mlx -lmlx -L./libft -lft -framework OpenGL -framework AppKit -o $(NAME) 
+
+.PHONY:		libft
+libft:
+			@make -j3 -C ./libft all
+
 clean:
 			${RM} ${OBJ}
+			@make -C ./libft clean
+			@make -C ./mlx clean
 
 fclean:		clean
 			${RM} ${NAME}
-			make clean -C ./mlx
+			@make -C ./libft fclean
 
 re:			fclean all
 

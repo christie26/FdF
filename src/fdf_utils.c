@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 15:36:08 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/13 14:11:49 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/16 16:38:51 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ int	key_hook(int keycode, t_param *param)
 {
 	printf("This key's keycode is %d\n", keycode);
 	if (keycode == ESC)
-	{
-		mlx_destroy_window(param->mlx, param->win);
 		exit(EXIT_SUCCESS);
-	}
+//	if (keycode == LEFT)
+//		angle.x
 	else
 		printf("It's not ESC\n");
+	(void)param;
 	return (0);
 }
 

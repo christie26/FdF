@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 20:13:34 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/13 17:17:11 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/16 13:12:23 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 # include <fcntl.h>
 
 # define ESC 53
+# define LEFT 123
+# define RIGHT 124
+# define DOWN 125
+# define UP 126
 # define PI 3.141592654
 
 typedef struct s_cube {
@@ -62,6 +66,12 @@ typedef struct s_param {
 	void	*mlx;
 	void	*win;
 	void	*image;
+	t_angle	angle;
+	t_map	map;
+	struct	{
+
+	};
+
 }	t_param;
 
 int		ft_abs(int d);

@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/11 18:46:18 by yoonsele          #+#    #+#             */
-/*   Updated: 2022/11/20 18:47:16 by yoonsele         ###   ########.fr       */
+/*   Created: 2022/11/13 14:22:46 by yoonsele          #+#    #+#             */
+/*   Updated: 2022/11/20 18:45:53 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+void	ft_putnbr_fd(int n, int fd)
 {
-	char	*dst;
-	size_t	len_s1;
-	size_t	len_s2;
-	size_t	total;
+	unsigned int	new;
+	int				tmp;
+	char			c;
 
-	len_s1 = ft_strlen((char *)s1);
-	len_s2 = ft_strlen((char *)s2);
-	total = len_s1 + len_s2;
-	dst = (char *)malloc(sizeof(char) * (total + 1));
-	if (!dst)
-		return (0);
-	while (len_s1--)
-		*dst++ = *s1++;
-	while (len_s2--)
-		*dst++ = *s2++;
-	*dst = 0;
-	dst -= total;
-	return (dst);
+	if (n < 0)
+	{
+		new = -n;
+		write(fd, "-", 1);
+	}
+	else
+		new = n;
+	tmp = new % 10;
+	if (new >= 10)
+	{
+		new /= 10;
+		ft_putnbr_fd(new, fd);
+	}
+	c = tmp + '0';
+	write(fd, &c, 1);
+	return ;
 }

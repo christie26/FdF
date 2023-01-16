@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/11 18:46:18 by yoonsele          #+#    #+#             */
-/*   Updated: 2022/11/20 18:47:16 by yoonsele         ###   ########.fr       */
+/*   Created: 2022/09/06 17:21:30 by yoonsele          #+#    #+#             */
+/*   Updated: 2022/11/20 18:46:39 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strdup(const char *src)
 {
-	char	*dst;
-	size_t	len_s1;
-	size_t	len_s2;
-	size_t	total;
+	size_t	i;
+	size_t	len;
+	char	*new;
+	char	*tmp;
 
-	len_s1 = ft_strlen((char *)s1);
-	len_s2 = ft_strlen((char *)s2);
-	total = len_s1 + len_s2;
-	dst = (char *)malloc(sizeof(char) * (total + 1));
-	if (!dst)
+	len = ft_strlen((char *)src);
+	new = (char *)malloc((len + 1) * sizeof(char));
+	if (!(new))
 		return (0);
-	while (len_s1--)
-		*dst++ = *s1++;
-	while (len_s2--)
-		*dst++ = *s2++;
-	*dst = 0;
-	dst -= total;
-	return (dst);
+	i = 0;
+	tmp = new;
+	while (*src)
+		*tmp++ = *src++;
+	*tmp = 0;
+	return (new);
 }

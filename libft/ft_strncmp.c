@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/11 18:46:18 by yoonsele          #+#    #+#             */
-/*   Updated: 2022/11/20 18:47:16 by yoonsele         ###   ########.fr       */
+/*   Created: 2022/08/29 21:55:22 by yoonsele          #+#    #+#             */
+/*   Updated: 2022/11/20 18:47:36 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char	*dst;
-	size_t	len_s1;
-	size_t	len_s2;
-	size_t	total;
+	size_t	i;
 
-	len_s1 = ft_strlen((char *)s1);
-	len_s2 = ft_strlen((char *)s2);
-	total = len_s1 + len_s2;
-	dst = (char *)malloc(sizeof(char) * (total + 1));
-	if (!dst)
+	i = 0;
+	if (n == 0)
 		return (0);
-	while (len_s1--)
-		*dst++ = *s1++;
-	while (len_s2--)
-		*dst++ = *s2++;
-	*dst = 0;
-	dst -= total;
-	return (dst);
+	while ((i + 1 < n) && s1[i] && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
 }
+//unsigned char casting
