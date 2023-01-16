@@ -53,42 +53,37 @@ typedef struct s_map {
 	int	height_max;
 }	t_map;
 
-typedef struct s_image {
+typedef struct s_data {
+	void	*mlx;
+	void	*win;
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}	t_image;
-// add dmin, max here
-
-typedef struct s_param {
-	void	*mlx;
-	void	*win;
-	void	*image;
 	t_angle	angle;
 	t_map	map;
-	struct	{
-
-	};
-
-}	t_param;
+}	t_data;
 
 int		ft_abs(int d);
-void	*ft_calloc(size_t count, size_t size);
-void	write_pixel_image(t_image *data, int x, int y, int color);
-int		key_hook(int keycode, t_param *param);
-void	main_rotate(t_image *img);
-void	draw_line(t_image *data, t_plan *point1, t_plan *point2, int color);
-char	*get_next_line(int fd);
 size_t	ft_strlen(const char *str);
+void	*ft_calloc(size_t count, size_t size);
+char	*get_next_line(int fd);
 char	**ft_split(char const *s, char c);
 int		ft_atoi(const char *str);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+int		ft_memcmp(const void *s1, const void *s2, size_t n);
+
+void	write_pixel_image(t_data *data, int x, int y, int color);
+int		key_hook(int keycode, t_data *data);
+void	main_rotate(t_data *img);
+void	draw_line(t_data *data, t_plan *point1, t_plan *point2, int color);
 int		get_width(char *buf);
 void	make_cube(t_cube *cube_set, char **tab, t_map map);
 void	rotate3d(t_cube *origin, t_plan	*project, double angle_x, double angle_y, double angle_z, t_map *map);
 char	*ft_strjoin(char *s1, char *s2);
 char	**read_map(int fd, t_map *map);
-void	print_center(t_plan *plan_set, t_image *img, int color, t_map map);
-
+void	print_center(t_plan *plan_set, t_data *img, int color, t_map map);
+char 	**open_file(t_map *map, char *av);
+t_data	*data_init(void);
 #endif

@@ -4,8 +4,9 @@ SRC			= draw_line.c \
 			  fdf_utils.c \
 			  main.c \
 			  rotate.c \
-			  map_valid.c \
-			  print_center.c
+			  read_map.c \
+			  print_center.c \
+			  data_init.c	
 SRC			:= $(addprefix $(SRCDIR)/, $(SRC))
 OBJ			= ${SRC:.c=.o}
 
@@ -18,19 +19,19 @@ RM			= rm -f
 
 all:		${NAME}
 
-%.o: 		%.c
-			$(CC) ${CFLAGS} -c $< -o $@
+%.o: 		%.c $(DYLIB)
+			$(CC) ${CFLAGS} -Imlx -c $< -o $@
 
 $(DYLIB):	
-			@make -C ./mlx
-			cp $(DYLIB) .
+			make -C ./mlx
+			cp $(DYLIB) ./
 
 $(NAME): 	$(OBJ) $(DYLIB) libft
 			$(CC) $(OBJ) -L./mlx -lmlx -L./libft -lft -framework OpenGL -framework AppKit -o $(NAME) 
 
 .PHONY:		libft
 libft:
-			@make -j3 -C ./libft all
+			make -j3 -C ./libft all
 
 clean:
 			${RM} ${OBJ}

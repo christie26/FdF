@@ -2,7 +2,7 @@
 
 #include "fdf.h"
 
-void	print_sero(t_plan *plan_set, t_image *img, int color, t_map map)
+void	print_sero(t_plan *plan_set, t_data *img, int color, t_map map)
 {
 	int	col;
 	int	row;
@@ -26,7 +26,7 @@ void	print_sero(t_plan *plan_set, t_image *img, int color, t_map map)
 	}
 }
 
-void	print_garo(t_plan *plan_set, t_image *img, int color, t_map map)
+void	print_garo(t_plan *plan_set, t_data *img, int color, t_map map)
 {
 	int	col;
 	int	row;
@@ -51,7 +51,7 @@ void	print_garo(t_plan *plan_set, t_image *img, int color, t_map map)
 	
 }
 
-void	print_center(t_plan *plan_set, t_image *img, int color, t_map map)
+void	print_center(t_plan *plan_set, t_data *img, int color, t_map map)
 {
 	print_sero(plan_set, img, color, map);
 	print_garo(plan_set, img, color, map);

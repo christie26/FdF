@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_valid.c                                        :+:      :+:    :+:   */
+/*   read_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -58,6 +58,27 @@ char	**read_map(int fd, t_map *map)
 	map->height_max = 0;
 	return (tab);
 }
+
+char **open_file(t_map *map, char *av)
+{
+	int		fd;
+	char	*format;
+
+	format = ft_substr(av, ft_strlen(av) - 4, 4);
+	if (ft_memcmp(format, ".fdf.", 4))
+	{
+		perror("Error : unvalid file format!");
+		return (0);
+	}
+	fd = open(av, O_RDONLY);
+	if (fd == -1)
+	{
+		perror("Error :");
+		return (0);
+	}
+	return (read_map(fd, map));
+}
+
 
 void	make_cube(t_cube *cube_set, char **tab, t_map map)
 {

@@ -13,10 +13,10 @@
 #include "fdf.h"
 #include <stdio.h>
 
-void	draw_line_x(t_image *image, t_plan *point1, t_plan *point2, int color);
-void	draw_line_y(t_image *image, t_plan *point1, t_plan *point2, int color);
+void	draw_line_x(t_data *data, t_plan *point1, t_plan *point2, int color);
+void	draw_line_y(t_data *data, t_plan *point1, t_plan *point2, int color);
 
-void	draw_line(t_image *image, t_plan *point1, t_plan *point2, int color)
+void	draw_line(t_data *data, t_plan *point1, t_plan *point2, int color)
 {
 	int	dx;
 	int	dy;
@@ -24,12 +24,12 @@ void	draw_line(t_image *image, t_plan *point1, t_plan *point2, int color)
 	dx = point1->x - point2->x;
 	dy = point1->y - point2->y;
 	if (ft_abs(dx) > ft_abs(dy))
-		draw_line_x(image, point1, point2, color);
+		draw_line_x(data, point1, point2, color);
 	else
-		draw_line_y(image, point1, point2, color);
+		draw_line_y(data, point1, point2, color);
 }
 
-void	draw_line_x(t_image *image, t_plan *point1, t_plan *point2, int color)
+void	draw_line_x(t_data *data, t_plan *point1, t_plan *point2, int color)
 {
 	int	dx;
 	int	dy;
@@ -46,7 +46,7 @@ void	draw_line_x(t_image *image, t_plan *point1, t_plan *point2, int color)
 	{
 		if (d >= 0)
 		{
-			write_pixel_image(image, x, y, color);
+			write_pixel_image(data, x, y, color);
 			if (dy > 0)
 				y = y + 1;
 			else
@@ -55,7 +55,7 @@ void	draw_line_x(t_image *image, t_plan *point1, t_plan *point2, int color)
 		}
 		else
 		{
-			write_pixel_image(image, x, y, color);
+			write_pixel_image(data, x, y, color);
 			d = d + 2 * ft_abs(dy);
 		}
 		if (dx > 0)
@@ -65,7 +65,7 @@ void	draw_line_x(t_image *image, t_plan *point1, t_plan *point2, int color)
 	}
 }
 
-void	draw_line_y(t_image *image, t_plan *point1, t_plan *point2, int color)
+void	draw_line_y(t_data *data, t_plan *point1, t_plan *point2, int color)
 {
 	int	dx;
 	int	dy;
@@ -82,7 +82,7 @@ void	draw_line_y(t_image *image, t_plan *point1, t_plan *point2, int color)
 	{
 		if (d >= 0)
 		{
-			write_pixel_image(image, xx, yy, color);
+			write_pixel_image(data, xx, yy, color);
 			if (dx > 0)
 				xx = xx + 1;
 			else
@@ -91,7 +91,7 @@ void	draw_line_y(t_image *image, t_plan *point1, t_plan *point2, int color)
 		}
 		else
 		{
-			write_pixel_image(image, xx, yy, color);
+			write_pixel_image(data, xx, yy, color);
 			d = d + 2 * ft_abs(dx);
 		}
 		if (dy > 0)

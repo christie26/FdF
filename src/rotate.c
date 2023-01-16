@@ -74,7 +74,8 @@ void	rotate3d(t_cube *origin, t_plan	*project, double angle_x, double angle_y, d
 	return ;
 }
 
-// have to make new function work like this 
+// have to make new function work like this
+/* 
 void	main_rotate(t_image *img)
 {
 	t_cube	**cube_set;
@@ -129,3 +130,4 @@ void	main_rotate(t_image *img)
 		i++;
 	}
 }
+*/

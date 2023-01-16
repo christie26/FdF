@@ -21,15 +21,15 @@ int	ft_abs(int d)
 		return (d);
 }
 
-void	write_pixel_image(t_image *image, int x, int y, int color)
+void	write_pixel_image(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = image->addr + (y * image->line_length + x * (image->bits_per_pixel / 8));
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
-int	key_hook(int keycode, t_param *param)
+int	key_hook(int keycode, t_data *data)
 {
 	printf("This key's keycode is %d\n", keycode);
 	if (keycode == ESC)
@@ -38,7 +38,7 @@ int	key_hook(int keycode, t_param *param)
 //		angle.x
 	else
 		printf("It's not ESC\n");
-	(void)param;
+	(void)data;
 	return (0);
 }
 
