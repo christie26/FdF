@@ -32,7 +32,9 @@ int main(int ac, char **av)
 	cube_set = (t_cube *)malloc(sizeof(t_cube) * (map.width * map.height));
 	make_cube(cube_set, tab, map);
 	
-	// set plan
+	data = data_init();
+	
+	// set plan & print
 	plan_set = (t_plan *)malloc(sizeof(t_plan) * (map.width * map.height));
 	t_angle	angle;
 	angle.x = 15;
@@ -45,9 +47,7 @@ int main(int ac, char **av)
 	while (++i < map.width * map.height)
 		rotate3d(&(cube_set[i]), &(plan_set[i]), angle.x, angle.y, angle.z, &map);
 	printf("%d~%d, %d~%d\n",map.width_min, map.width_max, map.height_min, map.height_max);
-
-	data = data_init();
-	// print center
+	
 	print_center(plan_set, data, color, map);
 	mlx_key_hook(data->win, key_hook, &data);
 	mlx_loop(data->mlx);
