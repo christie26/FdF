@@ -38,12 +38,6 @@ typedef struct s_plan {
 	int	y;
 }	t_plan;
 
-typedef struct s_angle {
-	double	x;
-	double	y;
-	double	z;
-}	t_angle;
-
 typedef struct s_map {
 	int	width;
 	int	height;
@@ -61,13 +55,13 @@ typedef struct s_data {
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		status;
 	double	x_ro;
 	double	y_ro;
 	double	z_ro;
 	int		x_mv;
 	int		y_mv;
 	int		z_mv;
-	t_angle	*angle;
 	t_map	*map;
 	t_cube	*cube_set;
 }	t_data;
@@ -91,5 +85,5 @@ void	draw_line(t_data *data, t_plan *point1, t_plan *point2, int color);
 void	rotate3d(t_data *data, t_cube *cube, t_plan *plan);
 char	**read_map(int fd, t_map *map);
 void	print_center(t_plan *plan_set, t_data *img, int color, t_map map);
-t_data	*data_init(void);
+void	data_init(t_data *data);
 #endif

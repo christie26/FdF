@@ -18,5 +18,6 @@ int	key_hook(int keycode, t_data *data)
 	// rotate
 	// perspective 
 	// color?
+	data->status = 0;
 	return (0);
 }

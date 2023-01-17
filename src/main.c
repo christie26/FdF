@@ -14,7 +14,7 @@
 
 int main(int ac, char **av)
 {
-	t_data	*data;
+	t_data	data;
 	t_map	*map;
 	t_cube	*cube_set;
 
@@ -27,11 +27,12 @@ int main(int ac, char **av)
 	cube_set = get_cube(map, av[1]);
 	if (!cube_set)
 		exit(1);
-	data = data_init();
-	data->cube_set = cube_set;
-	data->map = map;
+	data_init(&data);
+	data.cube_set = cube_set;
+	data.map = map;
+
 //	render(data);
-	mlx_key_hook(data->win, key_hook, &data);
-	mlx_loop_hook(data->mlx, render, &data);
-	mlx_loop(data->mlx);	
+	mlx_key_hook(data.win, key_hook, &data);
+	mlx_loop_hook(data.mlx, render, &data);
+	mlx_loop(data.mlx);	
 }

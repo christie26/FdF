@@ -41,8 +41,6 @@ void	print_garo(t_plan *plan_set, t_data *img, int color, t_map map)
 		{
 			i = row * map.width + col;
 			j = row * map.width + col + 1;
-	//		printf("(%d,%d)-(%d,%d)\n",row, col, row , col+1);
-	//		printf("(%d,%d)-(%d,%d)\n",plan_set[i].x,plan_set[i].y,plan_set[j].x, plan_set[j].y);
 			draw_line(img, &(plan_set[i]), &(plan_set[j]), color);
 			col++;
 		}
