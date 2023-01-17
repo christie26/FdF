@@ -28,10 +28,10 @@ int main(int ac, char **av)
 	if (!cube_set)
 		exit(1);
 	data = data_init();
-	data->map = map;
 	data->cube_set = cube_set;
-	render(data);
+	data->map = map;
+//	render(data);
 	mlx_key_hook(data->win, key_hook, &data);
-//	mlx_loop_hook (data->mlx, render, &data);
+	mlx_loop_hook(data->mlx, render, &data);
 	mlx_loop(data->mlx);	
 }

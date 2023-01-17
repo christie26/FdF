@@ -49,25 +49,26 @@ void	rotate_x(double angle, t_cube *cube)
 	return ;
 }
 
-void	check_limit(t_plan project, t_map *map)
+void	check_limit(t_plan plan, t_map *map)
 {
-	if (project.x > map->width_max)
-		map->width_max = project.x;
-	if (project.x < map->width_min)
-		map->width_min = project.x;
-	if (project.y > map->height_max)
-		map->height_max = project.y;
-	if (project.y < map->height_min)
-		map->height_min = project.y;
+	if (plan.x > map->width_max)
+		map->width_max = plan.x;
+	if (plan.x < map->width_min)
+		map->width_min = plan.x;
+	if (plan.y > map->height_max)
+		map->height_max = plan.y;
+	if (plan.y < map->height_min)
+		map->height_min = plan.y;
 }
 
-void	rotate3d(t_cube *cube, t_plan *plan, t_angle angle, t_map *map)
+void	rotate3d(t_data *data, t_cube *cube, t_plan *plan)
 {
-	rotate_y(angle.y, cube);
-	rotate_x(angle.x, cube);
-	rotate_z(angle.z, cube);
+//	printf("check\n");
+	rotate_y(data->y_ro, cube);
+	rotate_x(data->x_ro, cube);
+	rotate_z(data->z_ro, cube);
 	plan->x =  500 + (int)(50 * cube->x);
 	plan->y =  500 + (int)(50 * cube->y);
-	check_limit(*plan, map);
+	check_limit(*plan, data->map);
 	return ;
 }

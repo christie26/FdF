@@ -88,7 +88,7 @@ void	write_pixel_image(t_data *data, int x, int y, int color);
 int		key_hook(int keycode, t_data *data);
 int		render(t_data *data);
 void	draw_line(t_data *data, t_plan *point1, t_plan *point2, int color);
-void	rotate3d(t_cube *origin, t_plan	*project, t_angle angle, t_map *map);
+void	rotate3d(t_data *data, t_cube *cube, t_plan *plan);
 char	**read_map(int fd, t_map *map);
 void	print_center(t_plan *plan_set, t_data *img, int color, t_map map);
 t_data	*data_init(void);
