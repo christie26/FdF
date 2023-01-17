@@ -13,7 +13,7 @@
 #include "fdf.h"
 #include <stdio.h>
 
-void	rotation_z(double angle, t_cube *cube)
+void	rotate_z(double angle, t_cube *cube)
 {
 	double	x;
 	double	y;
@@ -25,7 +25,7 @@ void	rotation_z(double angle, t_cube *cube)
 	return ;
 }
 
-void	rotation_y(double angle, t_cube *cube)
+void	rotate_y(double angle, t_cube *cube)
 {
 	double	x;
 	double	z;
@@ -37,7 +37,7 @@ void	rotation_y(double angle, t_cube *cube)
 	return ;
 }
 
-void	rotation_x(double angle, t_cube *cube)
+void	rotate_x(double angle, t_cube *cube)
 {
 	double	y;
 	double	z;
@@ -61,73 +61,13 @@ void	check_limit(t_plan project, t_map *map)
 		map->height_min = project.y;
 }
 
-void	rotate3d(t_cube *origin, t_plan	*project, double angle_x, double angle_y, double angle_z, t_map *map)
+void	rotate3d(t_cube *cube, t_plan *plan, t_angle angle, t_map *map)
 {
-//	printf("(%.f,%.f,%.f)\n", origin->x, origin->y, origin->z);
-	rotation_y(angle_y, origin);
-	rotation_x(angle_x, origin);
-	rotation_z(angle_z, origin);
-	project->x =  500 + (int)(50 * origin->x);
-	project->y =  500 + (int)(50 * origin->y);
-	check_limit(*project, map);
-//	printf("(%d,%d)\n", project->x, project->y);
+	rotate_y(angle.y, cube);
+	rotate_x(angle.x, cube);
+	rotate_z(angle.z, cube);
+	plan->x =  500 + (int)(50 * cube->x);
+	plan->y =  500 + (int)(50 * cube->y);
+	check_limit(*plan, map);
 	return ;
 }
-
-// have to make new function work like this
-/* 
-void	main_rotate(t_image *img)
-{
-	t_cube	**cube_set;
-	t_plan	**plan_set;
-	t_angle	angle;
-	double	color;
-	int	i;
-	
-	//don't have to use double pointer
-	cube_set = (t_cube **)malloc(sizeof(t_cube *));
-	plan_set = (t_plan **)malloc(sizeof(t_plan *));
-	i = 0;
-	while (i < 8)
-	{
-		cube_set[i] = (t_cube *)malloc(sizeof(t_cube));
-		plan_set[i] = (t_plan *)malloc(sizeof(t_plan));
-		i++;
-	}
-	color = 0xFFFFFF;
-	angle.x = 20;
-	angle.y = 45;
-	angle.z = 0;
-	angle.x = angle.x * (PI / 180);
-	angle.y = angle.y * (PI / 180);
-	angle.z = angle.z * (PI / 180);
-	i = 0;
-	while (i < 8)
-	{
-		(cube_set[i])->x = (double)(i % 2);
-		(cube_set[i])->y = (double)((i % 4) / 2);
-		(cube_set[i])->z = (double)(i / 4);
-	//	rotate3d(cube_set[i], plan_set[i], angle.x, angle.y, angle.z);
-		printf("planset[%d]=(%d,%d)\n", i, (plan_set[i])->x, (plan_set[i])->y);
-		i++;
-	}
-
-	i = 0;
-	while (i < 8)
-	{
-		write_pixel_image(img, (plan_set[i])->x, (plan_set[i])->y, color);
-		i++;
-	}
-	i = 0;
-	while (i < 4)
-	{
-		draw_line(img, plan_set[2 * i], plan_set[2 * i + 1], color);
-		draw_line(img, plan_set[i], plan_set[i + 4], color);
-		if (i < 2)
-			draw_line(img, plan_set[i], plan_set[i + 2], color);
-		else
-			draw_line(img, plan_set[i + 2], plan_set[i + 4], color);
-		i++;
-	}
-}
-*/

@@ -14,41 +14,24 @@
 
 int main(int ac, char **av)
 {
-	char	**tab;
 	t_data	*data;
-	t_map	map;
+	t_map	*map;
 	t_cube	*cube_set;
-	t_plan	*plan_set;
 
 	if (ac != 2)
 	{
 		perror("Error : ");
 		return(-1);
 	}
-	// read map & set cube	
-	tab = open_file(&map, av[1]);
-	if (!tab)
+	map = ft_calloc(1, sizeof(t_map));
+	cube_set = get_cube(map, av[1]);
+	if (!cube_set)
 		exit(1);
-	cube_set = (t_cube *)malloc(sizeof(t_cube) * (map.width * map.height));
-	make_cube(cube_set, tab, map);
-	
 	data = data_init();
-	
-	// set plan & print
-	plan_set = (t_plan *)malloc(sizeof(t_plan) * (map.width * map.height));
-	t_angle	angle;
-	angle.x = 15;
-	angle.y = -20;
-	angle.z = 20;
-	int	color;
-	color = 0xFFFFFF;
-	int	i;
-	i = -1;	
-	while (++i < map.width * map.height)
-		rotate3d(&(cube_set[i]), &(plan_set[i]), angle.x, angle.y, angle.z, &map);
-	printf("%d~%d, %d~%d\n",map.width_min, map.width_max, map.height_min, map.height_max);
-	
-	print_center(plan_set, data, color, map);
+	data->map = map;
+	data->cube_set = cube_set;
+	render(data);
 	mlx_key_hook(data->win, key_hook, &data);
-	mlx_loop(data->mlx);
+//	mlx_loop_hook (data->mlx, render, &data);
+	mlx_loop(data->mlx);	
 }

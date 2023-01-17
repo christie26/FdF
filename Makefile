@@ -4,9 +4,11 @@ SRC			= draw_line.c \
 			  fdf_utils.c \
 			  main.c \
 			  rotate.c \
-			  read_map.c \
+			  get_cube.c \
 			  print_center.c \
-			  data_init.c	
+			  data_init.c \
+			  render.c \
+			  key_hook.c	
 SRC			:= $(addprefix $(SRCDIR)/, $(SRC))
 OBJ			= ${SRC:.c=.o}
 

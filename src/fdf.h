@@ -61,8 +61,15 @@ typedef struct s_data {
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	t_angle	angle;
-	t_map	map;
+	double	x_ro;
+	double	y_ro;
+	double	z_ro;
+	int		x_mv;
+	int		y_mv;
+	int		z_mv;
+	t_angle	*angle;
+	t_map	*map;
+	t_cube	*cube_set;
 }	t_data;
 
 int		ft_abs(int d);
@@ -73,17 +80,16 @@ char	**ft_split(char const *s, char c);
 int		ft_atoi(const char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
+char	*ft_strjoin(char *s1, char *s2);
 
+t_cube	*get_cube(t_map *map, char *av);
+//void	make_cube(t_cube *cube_set, char **tab, t_map *map);
 void	write_pixel_image(t_data *data, int x, int y, int color);
 int		key_hook(int keycode, t_data *data);
-void	main_rotate(t_data *img);
+int		render(t_data *data);
 void	draw_line(t_data *data, t_plan *point1, t_plan *point2, int color);
-int		get_width(char *buf);
-void	make_cube(t_cube *cube_set, char **tab, t_map map);
-void	rotate3d(t_cube *origin, t_plan	*project, double angle_x, double angle_y, double angle_z, t_map *map);
-char	*ft_strjoin(char *s1, char *s2);
+void	rotate3d(t_cube *origin, t_plan	*project, t_angle angle, t_map *map);
 char	**read_map(int fd, t_map *map);
 void	print_center(t_plan *plan_set, t_data *img, int color, t_map map);
-char 	**open_file(t_map *map, char *av);
 t_data	*data_init(void);
 #endif

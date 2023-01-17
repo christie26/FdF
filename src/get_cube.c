@@ -31,6 +31,26 @@ int	get_width(char *buf)
 	return (width);
 }
 
+int	open_file(char *av)
+{
+	int		fd;
+	char	*format;
+
+	format = ft_substr(av, ft_strlen(av) - 4, 4);
+	if (ft_memcmp(format, ".fdf.", 4))
+	{
+		perror("Error : unvalid file format!");
+		return (0);
+	}
+	fd = open(av, O_RDONLY);
+	if (fd == -1)
+	{
+		perror("Error :");
+		return (0);
+	}
+	return (fd);
+}
+
 char	**read_map(int fd, t_map *map)
 {
 	char	*buf;
@@ -48,8 +68,8 @@ char	**read_map(int fd, t_map *map)
 		map->height++;
 		buf = get_next_line(fd);
 		if (buf == 0)
-			break;
-		storage = ft_strjoin(storage, buf); //free
+			break ;
+		storage = ft_strjoin(storage, buf);
 	}
 	tab = ft_split(storage, '\n');
 	map->width_min = 0;
@@ -58,29 +78,9 @@ char	**read_map(int fd, t_map *map)
 	map->height_max = 0;
 	return (tab);
 }
+// have to deal with free
 
-char **open_file(t_map *map, char *av)
-{
-	int		fd;
-	char	*format;
-
-	format = ft_substr(av, ft_strlen(av) - 4, 4);
-	if (ft_memcmp(format, ".fdf.", 4))
-	{
-		perror("Error : unvalid file format!");
-		return (0);
-	}
-	fd = open(av, O_RDONLY);
-	if (fd == -1)
-	{
-		perror("Error :");
-		return (0);
-	}
-	return (read_map(fd, map));
-}
-
-
-void	make_cube(t_cube *cube_set, char **tab, t_map map)
+void	make_cube(t_cube *cube_set, char **tab, t_map *map)
 {
 	int		x;
 	int		y;
@@ -88,21 +88,33 @@ void	make_cube(t_cube *cube_set, char **tab, t_map map)
 	char	**tab2;
 
 	y = 0;
-//	printf("%d,%d\n", map.width, map.height);
-	while (y < map.height)
+	while (y < map->height)
 	{
-	//	printf("tab is %s\n", tab[y]);
 		tab2 = ft_split(tab[y], ' ');
 		x = 0;
-		while (x < map.width)
+		while (x < map->width)
 		{
-			i = y * map.width + x;
+			i = y * map->width + x;
 			cube_set[i].x = x;
 			cube_set[i].y = y;
 			cube_set[i].z = ft_atoi(tab2[x]);
-	//		printf("i=%d, x=%d, y=%d\n", i, x, y);
 			x++;
 		}
 		y++;
 	}
+}
+
+t_cube	*get_cube(t_map *map, char *av)
+{
+	int		fd;
+	char	**tab;
+	t_cube	*cube_set;
+
+	fd = open_file(av);
+	tab = read_map(fd, map);
+	if (!tab)
+		return (0);
+	cube_set = (t_cube *)malloc(sizeof(t_cube) * (map->width * map->height));
+	make_cube(cube_set, tab, map);
+	return (cube_set);
 }
