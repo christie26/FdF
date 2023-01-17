@@ -59,9 +59,9 @@ typedef struct s_data {
 	double	x_ro;
 	double	y_ro;
 	double	z_ro;
-	int		x_mv;
-	int		y_mv;
-	int		z_mv;
+	double	x_mv;
+	double	y_mv;
+	double	z_mv;
 	t_map	*map;
 	t_cube	*cube_set;
 }	t_data;
@@ -77,7 +77,6 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
 char	*ft_strjoin(char *s1, char *s2);
 
 t_cube	*get_cube(t_map *map, char *av);
-//void	make_cube(t_cube *cube_set, char **tab, t_map *map);
 void	write_pixel_image(t_data *data, int x, int y, int color);
 int		key_hook(int keycode, t_data *data);
 int		render(t_data *data);
@@ -86,4 +85,5 @@ void	rotate3d(t_data *data, t_cube *cube, t_plan *plan);
 char	**read_map(int fd, t_map *map);
 void	print_center(t_plan *plan_set, t_data *img, int color, t_map map);
 void	data_init(t_data *data);
+void	data_reset(t_data *data);
 #endif

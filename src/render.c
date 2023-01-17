@@ -19,7 +19,6 @@ int	render(t_data *data)
 	t_plan	*plan_set;
 	t_map	*map;
 
-	printf("status is %d\n", data->status);
 	cube_set = data->cube_set;
 	map = data->map;
 	if (data->status)
@@ -36,6 +35,6 @@ int	render(t_data *data)
 		rotate3d(data, &(cube_set[i]), &(plan_set[i]));
 	printf("%d~%d, %d~%d\n",map->width_min, map->width_max, map->height_min, map->height_max);
 	print_center(plan_set, data, color, *map);
-	data->status = 1;
+	data_reset(data);
 	return (0);
 }

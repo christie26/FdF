@@ -8,7 +8,10 @@ int	key_hook(int keycode, t_data *data)
 		exit(EXIT_SUCCESS);
 	// move
 	if (keycode == LEFT)
+	{
 		data->x_mv = -10;
+		printf("data->x_mv = %.f", data->x_mv);
+	}
 	if (keycode == RIGHT)
 		data->x_mv = 10;
 	if (keycode == UP)

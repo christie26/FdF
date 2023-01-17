@@ -18,3 +18,13 @@ void	data_init(t_data *data)
 	return ;
 }
 
+void	data_reset(t_data *data)
+{
+	data->x_mv = 0;
+	data->y_mv = 0;
+	data->z_mv = 0;
+	data->x_ro = 15;
+	data->y_ro = -20;
+	data->z_ro = 20;
+	data->status = 1;	
+}

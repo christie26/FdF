@@ -17,8 +17,6 @@ void	print_sero(t_plan *plan_set, t_data *img, int color, t_map map)
 		{
 			i = row * map.width + col;
 			j = (row + 1) * map.width + col;
-	//		printf("(%d,%d)-(%d,%d)\n",row, col, row + 1, col);
-	//		printf("(%d,%d)-(%d,%d)\n",plan_set[i].x,plan_set[i].y,plan_set[j].x, plan_set[j].y);
 			draw_line(img, &(plan_set[i]), &(plan_set[j]), color);
 			row++;
 		}
