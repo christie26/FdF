@@ -25,6 +25,8 @@ int main(int ac, char **av)
 	}
 	map = ft_calloc(1, sizeof(t_map));
 	cube_set = get_cube(map, av[1]);
+	for (int i = 0; i < 12; i++)
+		printf("%.f,%.f,%.f\n",cube_set[i].x, cube_set[i].y, cube_set[i].z);
 	if (!cube_set)
 		exit(1);
 	data_init(&data);

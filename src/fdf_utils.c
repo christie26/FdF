@@ -25,7 +25,7 @@ void	write_pixel_image(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	if (x > 500 || x < 0 || y > 500 | y < 0)
+	if (x > 950 || x < 50 || y > 950 | y < 50)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;

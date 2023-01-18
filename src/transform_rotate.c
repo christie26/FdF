@@ -59,9 +59,9 @@ void	transform_rotate(t_data *data, t_cube *cube)
 	transform_move(data, cube);
 	while (i < data->map->width * data->map->height)
 	{
-		rotate_y(data->y_ro, cube);
-		rotate_x(data->x_ro, cube);
-		rotate_z(data->z_ro, cube);
+		rotate_y(data->y_ro, &cube[i]);
+		rotate_x(data->x_ro, &cube[i]);
+		rotate_z(data->z_ro, &cube[i]);
 		i++;
 	}
 	data->x_mv = (data->map->x_max - data->map->x_min) / 2;

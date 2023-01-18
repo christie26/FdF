@@ -55,16 +55,14 @@ void	get_plan(t_data *data, t_cube *cube, t_plan *plan)
 	int	i;
 
 	i = 0;
-	data->x_ro = 35;
+	data->z_ro = -35;
 	data->y_ro = 45;
 	transform_rotate(data, cube);
 	while (i < data->map->width * data->map->height)
 	{
-	//	plan[i].x = get_iso_x(data, cube[i]);
-	//	plan[i].y = get_iso_y(data, cube[i]);
-		plan[i].x = 50 + 100 *cube[i].x;
-		plan[i].y = 50 + 100 *cube[i].y;
-		printf("%d,%d\n", plan[i].x, plan[i].y);
+		plan[i].x = 500 + cube[i].x;
+		plan[i].y = 400 + cube[i].y;
+	//	printf("%d,%d\n", plan[i].x, plan[i].y);
 	//	check_limit(plan[i], data->map);
 		i++;
 	}
