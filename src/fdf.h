@@ -26,6 +26,9 @@
 # define DOWN 125
 # define UP 126
 # define PI 3.141592654
+# define ISO 0.46365
+# define ISO_X 35
+# define ISO_Y 45
 
 typedef struct s_cube {
 	double	x;
@@ -41,10 +44,16 @@ typedef struct s_plan {
 typedef struct s_map {
 	int	width;
 	int	height;
-	int	width_min;
-	int	width_max;
-	int	height_min;
-	int	height_max;
+	int	x_min;
+	int	x_max;
+	int	y_min;
+	int	y_max;
+	int	z_min;
+	int	z_max;
+//	int	width_min;
+//	int	width_max;
+//	int	height_min;
+//	int	height_max;
 }	t_map;
 
 typedef struct s_data {
@@ -62,6 +71,7 @@ typedef struct s_data {
 	double	x_mv;
 	double	y_mv;
 	double	z_mv;
+	double	scale;
 	t_map	*map;
 	t_cube	*cube_set;
 }	t_data;
@@ -81,7 +91,10 @@ void	write_pixel_image(t_data *data, int x, int y, int color);
 int		key_hook(int keycode, t_data *data);
 int		render(t_data *data);
 void	draw_line(t_data *data, t_plan *point1, t_plan *point2, int color);
-void	rotate3d(t_data *data, t_cube *cube, t_plan *plan);
+
+void	get_plan(t_data *data, t_cube *cube, t_plan *plan);
+void	transform_rotate(t_data *data, t_cube *cube);
+void	transform_move(t_data *data, t_cube *cube);
 char	**read_map(int fd, t_map *map);
 void	print_center(t_plan *plan_set, t_data *img, int color, t_map map);
 void	data_init(t_data *data);

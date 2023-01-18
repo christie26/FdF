@@ -1,4 +1,3 @@
-// this file has two function 
 
 #include "fdf.h"
 

@@ -72,10 +72,6 @@ char	**read_map(int fd, t_map *map)
 		storage = ft_strjoin(storage, buf);
 	}
 	tab = ft_split(storage, '\n');
-	map->width_min = 0;
-	map->width_max = 0;
-	map->height_min = 0;
-	map->height_max = 0;
 	return (tab);
 }
 // have to deal with free
@@ -104,6 +100,29 @@ void	make_cube(t_cube *cube_set, char **tab, t_map *map)
 	}
 }
 
+void	check_limit_cube(t_cube *cube, t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i < map->width * map->height)
+	{
+		if (cube[i].x > map->x_max)
+			map->x_max = cube[i].x;
+		if (cube[i].x < map->x_min)
+			map->x_min = cube[i].x;
+		if (cube[i].y > map->y_max)
+			map->y_max = cube[i].y;
+		if (cube[i].y < map->y_min)
+			map->y_min = cube[i].y;
+		if (cube[i].z > map->z_max)
+			map->z_max = cube[i].z;
+		if (cube[i].z < map->z_min)
+			map->z_min = cube[i].z;
+		i++;
+	}	
+}
+
 t_cube	*get_cube(t_map *map, char *av)
 {
 	int		fd;
@@ -116,5 +135,6 @@ t_cube	*get_cube(t_map *map, char *av)
 		return (0);
 	cube_set = (t_cube *)malloc(sizeof(t_cube) * (map->width * map->height));
 	make_cube(cube_set, tab, map);
+	check_limit_cube(cube_set, map);
 	return (cube_set);
 }

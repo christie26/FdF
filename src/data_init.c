@@ -6,10 +6,11 @@ void	data_init(t_data *data)
 	data->x_mv = 0;
 	data->y_mv = 0;
 	data->z_mv = 0;
-	data->x_ro = 15;
-	data->y_ro = -20;
-	data->z_ro = 20;
+	data->x_ro = 0;
+	data->y_ro = 0;
+	data->z_ro = 0;
 	data->status = 0;
+	data->scale = 1000;	
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, 1000, 1000, "mlx 42");
 	data->img = mlx_new_image(data->mlx, 1000, 1000);
@@ -23,8 +24,9 @@ void	data_reset(t_data *data)
 	data->x_mv = 0;
 	data->y_mv = 0;
 	data->z_mv = 0;
-	data->x_ro = 15;
-	data->y_ro = -20;
-	data->z_ro = 20;
+	data->x_ro = 0;
+	data->y_ro = 0;
+	data->z_ro = 0;
 	data->status = 1;	
+	data->scale = 1;	
 }

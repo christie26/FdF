@@ -11,43 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	rotate_z(double angle, t_cube *cube)
-{
-	double	x;
-	double	y;
-
-	x = cube->x;
-	y = cube->y;
-	cube->x = x * cos(angle) + y * sin(angle);
-	cube->y = x * -sin(angle) + y * cos(angle);
-	return ;
-}
-
-void	rotate_y(double angle, t_cube *cube)
-{
-	double	x;
-	double	z;
-
-	x = cube->x;
-	z = cube->z;
-	cube->x = x * cos(angle) - z * sin(angle);
-	cube->z = x * sin(angle) + z * cos(angle);
-	return ;
-}
-
-void	rotate_x(double angle, t_cube *cube)
-{
-	double	y;
-	double	z;
-
-	y = cube->y;
-	z = cube->z;
-	cube->y = y * cos(angle) + z * sin(angle);
-	cube->z = y * -sin(angle) + z * cos(angle);
-	return ;
-}
-
+/*
 void	check_limit(t_plan plan, t_map *map)
 {
 	if (plan.x > map->width_max)
@@ -59,15 +23,50 @@ void	check_limit(t_plan plan, t_map *map)
 	if (plan.y < map->height_min)
 		map->height_min = plan.y;
 }
-
-void	rotate3d(t_data *data, t_cube *cube, t_plan *plan)
+*/
+/*
+int	get_iso_x(t_data *data, t_cube cube)
 {
-//	printf("check\n");
-	rotate_y(data->y_ro, cube);
-	rotate_x(data->x_ro, cube);
-	rotate_z(data->z_ro, cube);
-	plan->x =  500 + (int)(50 * cube->x);
-	plan->y =  500 + (int)(50 * cube->y);
-	check_limit(*plan, data->map);
+	double	iso_x;
+	int		result;
+
+	iso_x = (cube.x - cube.z) * cos(ISO);
+	result = iso_x;
+	(void)data;
+//	result = iso_x - data->map->width_min + 50;
+	return (result);
+}
+
+int	get_iso_y(t_data *data, t_cube cube)
+{
+	double	iso_y;
+	int		result;
+
+	iso_y = (cube.x + cube.z) * sin(ISO) - cube.y;
+	result = iso_y;
+	(void)data;
+//	result = -iso_y - data->map->height_min + 50;
+	return (result);
+}
+*/
+
+void	get_plan(t_data *data, t_cube *cube, t_plan *plan)
+{
+	int	i;
+
+	i = 0;
+	data->x_ro = 35;
+	data->y_ro = 45;
+	transform_rotate(data, cube);
+	while (i < data->map->width * data->map->height)
+	{
+	//	plan[i].x = get_iso_x(data, cube[i]);
+	//	plan[i].y = get_iso_y(data, cube[i]);
+		plan[i].x = 50 + 100 *cube[i].x;
+		plan[i].y = 50 + 100 *cube[i].y;
+		printf("%d,%d\n", plan[i].x, plan[i].y);
+	//	check_limit(plan[i], data->map);
+		i++;
+	}
 	return ;
 }
