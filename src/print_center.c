@@ -46,8 +46,13 @@ void	print_garo(t_plan *plan_set, t_data *img, int color, t_map map)
 	
 }
 
-void	print_center(t_plan *plan_set, t_data *img, int color, t_map map)
+void	print_center(t_plan *plan_set, t_data *data, int color, t_map map)
 {
-	print_sero(plan_set, img, color, map);
-	print_garo(plan_set, img, color, map);
+	if (data->img)
+		mlx_destroy_image(data->mlx,data->img);
+	data->img = mlx_new_image(data->mlx, 1000, 800);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length, &data->endian);
+	print_sero(plan_set, data, color, map);
+	print_garo(plan_set, data, color, map);
 }

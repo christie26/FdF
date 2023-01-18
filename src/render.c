@@ -37,6 +37,7 @@ int	render(t_data *data)
 	map = data->map;
 	if (data->status)
 		return (0);
+	printf("start render\n");
 	transform_move(data, data->cube_set);
 	transform_scale(data, data->cube_set, data->scale);
 	transform_rotate(data, data->cube_set);
@@ -45,7 +46,7 @@ int	render(t_data *data)
 	int	color;
 	color = 0xFFFFFF;
 	get_plan(data, data->cube_set, plan_set);
-
+	
 	print_center(plan_set, data, color, *map);
 	data_reset(data);
 	return (0);
