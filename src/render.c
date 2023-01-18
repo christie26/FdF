@@ -45,8 +45,7 @@ int	render(t_data *data)
 	plan_set = (t_plan *)malloc(sizeof(t_plan) * (map->width * map->height));
 	int	color;
 	color = 0xFFFFFF;
-	get_plan(data, data->cube_set, plan_set);
-	
+	get_plan(data, data->cube_set, plan_set);	
 	print_center(plan_set, data, color, *map);
 	data_reset(data);
 	return (0);

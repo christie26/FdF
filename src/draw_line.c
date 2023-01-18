@@ -6,12 +6,11 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 15:14:28 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/12 17:30:46 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:54:04 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 void	draw_line_x(t_data *data, t_plan *point1, t_plan *point2, int color);
 void	draw_line_y(t_data *data, t_plan *point1, t_plan *point2, int color);
