@@ -43,9 +43,9 @@ void	draw_line_x(t_data *data, t_plan *point1, t_plan *point2, int color)
 	y = point1->y;
 	while (x != point2->x)
 	{
+		write_pixel_image(data, x, y, color);
 		if (d >= 0)
 		{
-			write_pixel_image(data, x, y, color);
 			if (dy > 0)
 				y = y + 1;
 			else
@@ -53,10 +53,7 @@ void	draw_line_x(t_data *data, t_plan *point1, t_plan *point2, int color)
 			d = d + 2 * ft_abs(dy) - 2 * ft_abs(dx);
 		}
 		else
-		{
-			write_pixel_image(data, x, y, color);
 			d = d + 2 * ft_abs(dy);
-		}
 		if (dx > 0)
 			x = x + 1;
 		else
@@ -79,9 +76,9 @@ void	draw_line_y(t_data *data, t_plan *point1, t_plan *point2, int color)
 	yy = point1->y;
 	while (yy != point2->y)
 	{
+		write_pixel_image(data, xx, yy, color);
 		if (d >= 0)
 		{
-			write_pixel_image(data, xx, yy, color);
 			if (dx > 0)
 				xx = xx + 1;
 			else
@@ -89,10 +86,7 @@ void	draw_line_y(t_data *data, t_plan *point1, t_plan *point2, int color)
 			d = d + 2 * ft_abs(dx) - 2 * ft_abs(dy);
 		}
 		else
-		{
-			write_pixel_image(data, xx, yy, color);
 			d = d + 2 * ft_abs(dx);
-		}
 		if (dy > 0)
 			yy = yy + 1;
 		else

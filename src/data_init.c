@@ -12,9 +12,8 @@
 
 #include "fdf.h"
 
-void	data_init(t_data *data)
+void	data_init(t_data *data, t_map *map)
 {
-//	data = ft_calloc(1, sizeof(t_data));
 	data->x_mv = 0;
 	data->y_mv = 0;
 	data->z_mv = 0;
@@ -22,7 +21,10 @@ void	data_init(t_data *data)
 	data->y_ro = 30;
 	data->z_ro = -30;
 	data->status = 0;
-	data->scale = 50;
+	data->scale = 1;
+	data->x = (map->x_max - map->x_min) / 2;
+	data->y = (map->y_max - map->y_min) / 2;
+	data->z = (map->z_max - map->z_min) / 2;
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, 1000, 800, "mlx 42");
 	data->img = 0;

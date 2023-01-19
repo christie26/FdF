@@ -91,8 +91,8 @@ void	make_cube(t_cube *cube_set, char **tab, t_map *map)
 		while (x < map->width)
 		{
 			i = y * map->width + x;
-			cube_set[i].x = x;
-			cube_set[i].y = y;
+			cube_set[i].x = 10 * x;
+			cube_set[i].y = 10 * y;
 			cube_set[i].z = ft_atoi(tab2[x]);
 			x++;
 		}

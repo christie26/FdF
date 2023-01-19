@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 int	ft_abs(int d)
 {
@@ -28,5 +27,6 @@ void	write_pixel_image(t_data *data, int x, int y, int color)
 	if (x > 950 || x < 50 || y > 750 | y < 50)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
+	return ;
 }

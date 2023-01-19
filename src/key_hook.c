@@ -24,8 +24,13 @@ int	key_hook(int keycode, t_data *data)
 		data->x_mv = -5;
 	if (keycode == KEY_D)
 		data->x_mv = 5;
+	// scale
+	if (keycode == PLUS)
+		data->scale = 2;
+	if (keycode == MINUS)
+		data->scale = 0.5;
 	// perspective 
-	// color?
+	// color
 	data->status = 0;
 	return (0);
 }

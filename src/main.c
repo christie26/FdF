@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_data	data;
 	t_map	*map;
@@ -21,18 +21,16 @@ int main(int ac, char **av)
 	if (ac != 2)
 	{
 		perror("Error : ");
-		return(-1);
+		return (-1);
 	}
 	map = ft_calloc(1, sizeof(t_map));
 	cube_set = get_cube(map, av[1]);
-
-	printf("%d X %d\n", map->width, map->height);
 	if (!cube_set)
 		exit(1);
-	data_init(&data);
-	data.cube_set = cube_set;
+	data_init(&data, map);
 	data.map = map;
+	data.cube_set = cube_set;
 	mlx_key_hook(data.win, key_hook, &data);
 	mlx_loop_hook(data.mlx, render, &data);
-	mlx_loop(data.mlx);	
+	mlx_loop(data.mlx);
 }
