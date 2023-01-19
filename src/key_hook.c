@@ -1,19 +1,19 @@
 
 #include "fdf.h"
 
-int	key_hook(int keycode, t_data *data)
+int	key_press(int keycode, t_data *data)
 {
 	if (keycode == ESC)
 		exit(EXIT_SUCCESS);
 	// rotate
 	if (keycode == LEFT)
-		data->y_ro = -0.1;
+		data->y_ro = -1;
 	if (keycode == RIGHT)
-		data->y_ro = 0.1;
+		data->y_ro = 1;
 	if (keycode == UP)
-		data->x_ro = -0.1;
+		data->x_ro = -1;
 	if (keycode == DOWN)
-		data->x_ro = 0.1;
+		data->x_ro = 1;
 	// move	
 	if (keycode == KEY_W)
 		data->y_mv = -5;
@@ -25,9 +25,9 @@ int	key_hook(int keycode, t_data *data)
 		data->x_mv = 5;
 	// scale
 	if (keycode == PLUS)
-		data->scale = 2;
+		data->scale = 1.1;
 	if (keycode == MINUS)
-		data->scale = 0.5;
+		data->scale = 0.9;
 	// perspective 
 	if (keycode == KEY_P)
 		printf("should change perspective\n");
@@ -41,4 +41,9 @@ int	key_hook(int keycode, t_data *data)
 		printf("z height goes up\n");
 	data->status = 0;
 	return (0);
+}
+
+int	win_close(void)
+{
+	exit (1);
 }

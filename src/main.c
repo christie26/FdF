@@ -30,7 +30,11 @@ int	main(int ac, char **av)
 	data_init(&data, map);
 	data.map = map;
 	data.cube_set = cube_set;
-	mlx_key_hook(data.win, key_hook, &data);
+//	tring
+	mlx_hook(data.win, 2, 0, key_press, &data);
+	mlx_hook(data.win, 17, 0, win_close, 0);
+//	one I used before
+//	mlx_key_hook(data.win, key_hook, &data);
 	mlx_loop_hook(data.mlx, render, &data);
 	mlx_loop(data.mlx);
 	system("leaks fdf");
