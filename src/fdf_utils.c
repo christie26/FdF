@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 15:36:08 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/18 18:40:50 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/19 12:41:44 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	write_pixel_image(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	if (x > 950 || x < 50 || y > 950 | y < 50)
+	if (x > 950 || x < 50 || y > 750 | y < 50)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;

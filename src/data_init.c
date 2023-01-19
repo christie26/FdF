@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:49:44 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/18 17:59:21 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/19 12:31:01 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	data_init(t_data *data)
 	data->x_mv = 0;
 	data->y_mv = 0;
 	data->z_mv = 0;
-	data->x_ro = 15;
-	data->y_ro = 45;
-	data->z_ro = 15;
+	data->x_ro = 45;
+	data->y_ro = 30;
+	data->z_ro = -30;
 	data->status = 0;
 	data->scale = 50;
 	data->mlx = mlx_init();

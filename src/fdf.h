@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 20:13:34 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/18 17:59:23 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/19 12:37:01 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,14 @@ typedef struct s_plan {
 }	t_plan;
 
 typedef struct s_map {
-	int	width;
-	int	height;
-	int	x_min;
-	int	x_max;
-	int	y_min;
-	int	y_max;
-	int	z_min;
-	int	z_max;
-//	int	width_min;
-//	int	width_max;
-//	int	height_min;
-//	int	height_max;
+	int		width;
+	int		height;
+	double	x_min;
+	double	x_max;
+	double	y_min;
+	double	y_max;
+	double	z_min;
+	double	z_max;
 }	t_map;
 
 typedef struct s_data {
