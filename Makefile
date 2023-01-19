@@ -17,7 +17,7 @@ DYLIB		= ./mlx/libmlx.dylib
 NAME		= fdf
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -O3 -ffast-math -g -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror -O3 -ffast-math -g
 LDFLAGS		= -fsanitize=address 
 RM			= rm -f
 
@@ -31,7 +31,7 @@ $(DYLIB):
 			cp $(DYLIB) ./
 
 $(NAME): 	$(OBJ) $(DYLIB) libft
-			$(CC) $(OBJ) $(LDFLAGS) -L./mlx -lmlx -L./libft -lft -framework OpenGL -framework AppKit -o $(NAME) 
+			$(CC) $(OBJ) -L./mlx -lmlx -L./libft -lft -framework OpenGL -framework AppKit -o $(NAME) 
 
 .PHONY:		libft
 libft:

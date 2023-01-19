@@ -3,7 +3,6 @@
 
 int	key_hook(int keycode, t_data *data)
 {
-	printf("keycode=%d\n", keycode);
 	if (keycode == ESC)
 		exit(EXIT_SUCCESS);
 	// rotate
@@ -30,7 +29,16 @@ int	key_hook(int keycode, t_data *data)
 	if (keycode == MINUS)
 		data->scale = 0.5;
 	// perspective 
+	if (keycode == KEY_P)
+		printf("should change perspective\n");
 	// color
+	if (keycode == KEY_C)
+		printf("should show heat map\n");
+	// z height
+	if (keycode == B_LEFT)
+		printf("z height goes down\n");
+	if (keycode == B_LEFT)
+		printf("z height goes up\n");
 	data->status = 0;
 	return (0);
 }

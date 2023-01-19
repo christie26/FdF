@@ -29,6 +29,10 @@
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
+# define KEY_C 8
+# define KEY_P 8
+# define B_LEFT 33
+# define B_RIGHT 30
 # define PLUS 24
 # define MINUS 27
 # define PI 3.141592654
@@ -88,13 +92,11 @@ int		ft_atoi(const char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 char	*ft_strjoin(char *s1, char *s2);
-
 t_cube	*get_cube(t_map *map, char *av);
 void	write_pixel_image(t_data *data, int x, int y, int color);
 int		key_hook(int keycode, t_data *data);
 int		render(t_data *data);
 void	draw_line(t_data *data, t_plan *point1, t_plan *point2, int color);
-
 void	get_plan(t_data *data, t_cube *cube, t_plan *plan);
 void	transform_rotate(t_data *data, t_cube *cube);
 void	transform_move(t_data *data, t_cube *cube);

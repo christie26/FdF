@@ -72,6 +72,7 @@ char	**read_map(int fd, t_map *map)
 		storage = ft_strjoin(storage, buf);
 	}
 	tab = ft_split(storage, '\n');
+	free(storage);
 	return (tab);
 }
 // have to deal with free
@@ -96,8 +97,10 @@ void	make_cube(t_cube *cube_set, char **tab, t_map *map)
 			cube_set[i].z = ft_atoi(tab2[x]);
 			x++;
 		}
+		free(tab[y]);
 		y++;
 	}
+	free(tab);
 }
 
 void	check_limit_cube(t_cube *cube, t_map *map)

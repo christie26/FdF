@@ -17,8 +17,8 @@ void	data_init(t_data *data, t_map *map)
 	data->x_mv = 0;
 	data->y_mv = 0;
 	data->z_mv = 0;
-	data->x_ro = 45;
-	data->y_ro = 30;
+	data->x_ro = 30;
+	data->y_ro = 0;
 	data->z_ro = -30;
 	data->status = 0;
 	data->scale = 1;
