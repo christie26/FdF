@@ -28,18 +28,26 @@ int	key_press(int keycode, t_data *data)
 		data->scale = 1.1;
 	if (keycode == MINUS)
 		data->scale = 0.9;
-	// perspective 
-	if (keycode == KEY_P)
-		printf("should change perspective\n");
+	data->status = 1;
+
 	// color
 	if (keycode == KEY_C)
 		printf("should show heat map\n");
-	// z height
+	// perspective 
+	if (keycode == KEY_P)
+		data->status = 3;
+/*	// z height
 	if (keycode == B_LEFT)
-		printf("z height goes down\n");
-	if (keycode == B_LEFT)
-		printf("z height goes up\n");
-	data->status = 0;
+	{
+		data->status = 2;
+		data->scale = 0.9;
+	}
+	if (keycode == B_RIGHT)
+	{
+		data->status = 2;
+		data->scale = 2;
+	}
+*/
 	return (0);
 }
 

@@ -11,44 +11,6 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-/*
-void	check_limit(t_plan plan, t_map *map)
-{
-	if (plan.x > map->width_max)
-		map->width_max = plan.x;
-	if (plan.x < map->width_min)
-		map->width_min = plan.x;
-	if (plan.y > map->height_max)
-		map->height_max = plan.y;
-	if (plan.y < map->height_min)
-		map->height_min = plan.y;
-}
-*/
-/*
-int	get_iso_x(t_data *data, t_cube cube)
-{
-	double	iso_x;
-	int		result;
-
-	iso_x = (cube.x - cube.z) * cos(ISO);
-	result = iso_x;
-	(void)data;
-//	result = iso_x - data->map->width_min + 50;
-	return (result);
-}
-
-int	get_iso_y(t_data *data, t_cube cube)
-{
-	double	iso_y;
-	int		result;
-
-	iso_y = (cube.x + cube.z) * sin(ISO) - cube.y;
-	result = iso_y;
-	(void)data;
-//	result = -iso_y - data->map->height_min + 50;
-	return (result);
-}
-*/
 
 void	get_plan(t_data *data, t_cube *cube, t_plan *plan)
 {

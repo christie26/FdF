@@ -29,20 +29,32 @@ void	transform_init(t_data *data, t_cube *cube)
 	}
 }
 
-void	transform_scale(t_data *data, t_cube *cube, double scale)
+void	transform_scale(t_data *data, t_cube *cube, int flag)
 {
 	int	i;
 
 	i = 0;
-	if (scale == 1)
+	if (data->scale == 1)
 		return ;
 	while (i < data->map->width * data->map->height)
-	{	
-		cube[i].x = cube[i].x * scale;
-		cube[i].y = cube[i].y * scale;
-		cube[i].z = cube[i].z * scale;
+	{
+		if (flag == 1)
+		{
+			cube[i].x = cube[i].x * data->scale;
+			cube[i].y = cube[i].y * data->scale;
+		}
+		cube[i].z = cube[i].z * data->scale;
 		i++;
 	}
+//	data->scale = 1;
+}
+
+void	top_view(t_data *data)
+{
+	data->x_ro = -30;
+	data->y_ro = 0;
+	data->z_ro = 30;
+	// haven't finished
 }
 
 int	render(t_data *data)
@@ -52,13 +64,15 @@ int	render(t_data *data)
 	int		color;
 
 	map = data->map;
-	if (data->status)
+	if (!data->status)
 		return (0);
+	if (data->status == 3)
+		top_view(data);
 	transform_init(data, data->cube_set);
 	data->x = data->x_mv / 2;
 	data->y = data->y_mv / 2;
 	data->z = data->z_mv / 2;
-	transform_scale(data, data->cube_set, data->scale);
+	transform_scale(data, data->cube_set, data->status);
 	transform_rotate(data, data->cube_set);
 	transform_move(data, data->cube_set);
 	plan_set = (t_plan *)malloc(sizeof(t_plan) * (map->width * map->height));
