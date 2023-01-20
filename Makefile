@@ -1,13 +1,12 @@
 
 SRCDIR		= ./src
-SRC			= draw_line.c \
+SRC			= fdf.c \
 			  fdf_utils.c \
-			  fdf.c \
-			  transform_rotate.c \
 			  get_cube.c \
-			  get_plan.c \
-			  print_center.c \
 			  render.c \
+			  transform_rotate.c \
+			  print_center.c \
+			  draw_line.c \
 			  key_hook.c	
 SRC			:= $(addprefix $(SRCDIR)/, $(SRC))
 OBJ			= ${SRC:.c=.o}

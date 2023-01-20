@@ -51,6 +51,7 @@ char	**read_map(int fd, t_map *map)
 			break ;
 		storage = ft_strjoin(storage, buf);
 	}
+	map->size = map->width * map->height;
 	tab = ft_split(storage, '\n');
 	free(storage);
 	return (tab);
@@ -115,13 +116,14 @@ t_cube	*get_cube(t_map *map, char *av)
 	format = ft_substr(av, ft_strlen(av) - 4, 4);
 	if (ft_memcmp(format, ".fdf.", 4))
 		return (error_msg("Error : unvalid file format!"));
+	free(format);
 	fd = open(av, O_RDONLY);
 	if (fd == -1)
 		return (error_msg("Error :"));
 	tab = read_map(fd, map);
 	if (!tab)
 		return (0);
-	cube_set = (t_cube *)malloc(sizeof(t_cube) * (map->width * map->height));
+	cube_set = (t_cube *)malloc(sizeof(t_cube) * map->size);
 	make_cube(cube_set, tab, map);
 	check_limit_cube(cube_set, map);
 	return (cube_set);

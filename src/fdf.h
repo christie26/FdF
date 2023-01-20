@@ -52,6 +52,7 @@ typedef struct s_plan {
 typedef struct s_map {
 	int		width;
 	int		height;
+	int		size;
 	double	x_min;
 	double	x_max;
 	double	y_min;
@@ -69,7 +70,6 @@ typedef struct s_data {
 	int		line_length;
 	int		endian;
 	int		status;
-	double	win_xmin;
 	double	x_ro;
 	double	y_ro;
 	double	z_ro;
@@ -97,15 +97,12 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
 char	*ft_strjoin(char *s1, char *s2);
 char	**read_map(int fd, t_map *map);
 t_cube	*get_cube(t_map *map, char *av);
-void	data_init(t_data *data, t_map *map);
 int		key_press(int keycode, t_data *data);
 int		win_close(void);
 int		render(t_data *data);
 void	transform_rotate(t_data *data, t_cube *cube);
 void	transform_move(t_data *data, t_cube *cube);
-t_cube	*transform_init(t_data *data, t_cube *cube);
-void	get_plan(t_data *data, t_cube *cube, t_plan *plan);
-void	print_center(t_plan *plan_set, t_data *img, int color, t_map map);
+void	print_center(t_data *data, t_cube *render);
 void	draw_line(t_data *data, t_plan *point1, t_plan *point2, int color);
 void	write_pixel_image(t_data *data, int x, int y, int color);
 void	*error_msg(char *error_message);

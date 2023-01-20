@@ -19,7 +19,7 @@ void	transform_scale(t_data *data, t_cube *cube)
 	int	i;
 
 	i = 0;
-	if (data->scale == 1)
+	if (data->scale == 1 && data->z_scale == 1)
 		return ;
 	while (i < data->map->width * data->map->height)
 	{
@@ -37,8 +37,7 @@ t_cube	*transform_init(t_data *data, t_cube *cube)
 	t_cube	*render;
 
 	i = 0;
-	render = (t_cube *)malloc(sizeof(t_cube) * \
-		(data->map->width * data->map->height));
+	render = (t_cube *)malloc(sizeof(t_cube) * data->map->size);
 	if (!render)
 		return (0);
 	while (i < data->map->width * data->map->height)
@@ -60,13 +59,9 @@ void	top_view(t_data *data)
 
 int	render(t_data *data)
 {
-	t_plan	*plan_set;
 	t_cube	*render;
-	t_map	*map;
-	int		color;
 
-	map = data->map;
-	if (!data->status)
+	if (!data || !data->status)
 		return (0);
 	if (data->status == 2)
 		top_view(data);
@@ -76,10 +71,7 @@ int	render(t_data *data)
 	transform_scale(data, render);
 	transform_rotate(data, render);
 	transform_move(data, render);
-	plan_set = (t_plan *)malloc(sizeof(t_plan) * (map->width * map->height));
-	color = 0xFFFFFF;
-	get_plan(data, render, plan_set);
-	print_center(plan_set, data, color, *map);
+	print_center(data, render);
 	data->status = 0;
 	return (0);
 }
