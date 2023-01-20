@@ -24,14 +24,14 @@ RM			= rm -f
 all:		${NAME}
 
 %.o: 		%.c $(DYLIB)
-			$(CC) ${CFLAGS} -Imlx -c $< -o $@
+			$(CC) $(CFLAGS) $(LDFLAGS) -Imlx -c $< -o $@
 
 $(DYLIB):	
 			make -C ./mlx
 			cp $(DYLIB) ./
 
 $(NAME): 	$(OBJ) $(DYLIB) libft
-			$(CC) $(OBJ) -L./mlx -lmlx -L./libft -lft -framework OpenGL -framework AppKit -o $(NAME) 
+			$(CC) $(OBJ) $(LDFLAGS) -L./mlx -lmlx -L./libft -lft -framework OpenGL -framework AppKit -o $(NAME) 
 
 .PHONY:		libft
 libft:

@@ -30,7 +30,8 @@
 # define KEY_S 1
 # define KEY_D 2
 # define KEY_C 8
-# define KEY_P 8
+# define KEY_P 35
+# define KEY_T 17
 # define B_LEFT 33
 # define B_RIGHT 30
 # define PLUS 24
@@ -79,8 +80,10 @@ typedef struct s_data {
 	double	y;
 	double	z;
 	double	scale;
+	double	z_scale;
 	t_map	*map;
 	t_cube	*cube_set;
+	t_cube	*render;
 }	t_data;
 
 int		ft_abs(int d);
@@ -101,7 +104,7 @@ int		win_close(void);
 int		render(t_data *data);
 void	transform_rotate(t_data *data, t_cube *cube);
 void	transform_move(t_data *data, t_cube *cube);
-void	transform_init(t_data *data, t_cube *cube);
+t_cube	*transform_init(t_data *data, t_cube *cube);
 void	get_plan(t_data *data, t_cube *cube, t_plan *plan);
 void	print_center(t_plan *plan_set, t_data *img, int color, t_map map);
 void	draw_line(t_data *data, t_plan *point1, t_plan *point2, int color);
