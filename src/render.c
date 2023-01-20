@@ -35,10 +35,11 @@ void	transform_scale(t_data *data, t_cube *cube)
 t_cube	*transform_init(t_data *data, t_cube *cube)
 {
 	int		i;
-	t_cube *render;
+	t_cube	*render;
 
 	i = 0;
-	render = (t_cube *)malloc(sizeof(t_cube) * (data->map->width * data->map->height));
+	render = (t_cube *)malloc(sizeof(t_cube) * \
+		(data->map->width * data->map->height));
 	if (!render)
 		return (0);
 	while (i < data->map->width * data->map->height)
@@ -68,7 +69,7 @@ int	render(t_data *data)
 	map = data->map;
 	if (!data->status)
 		return (0);
-	if (data->status == 3)
+	if (data->status == 2)
 		top_view(data);
 	render = transform_init(data, data->cube_set);
 	if (!render)
