@@ -75,7 +75,6 @@ char	**read_map(int fd, t_map *map)
 	free(storage);
 	return (tab);
 }
-// have to deal with free
 
 void	make_cube(t_cube *cube_set, char **tab, t_map *map)
 {

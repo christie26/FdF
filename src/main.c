@@ -12,6 +12,7 @@
 
 #include "fdf.h"
 
+
 int	main(int ac, char **av)
 {
 	t_data	data;
@@ -24,20 +25,17 @@ int	main(int ac, char **av)
 		return (-1);
 	}
 	map = ft_calloc(1, sizeof(t_map));
+	if (!map)
+		return (0);
 	cube_set = get_cube(map, av[1]);
 	if (!cube_set)
 		exit(1);
 	data_init(&data, map);
 	data.map = map;
-//	printf("%d,%d\n", map->width,  map->height);
 	data.cube_set = cube_set;
-//	tring
 	mlx_hook(data.win, 2, 0, key_press, &data);
 	mlx_hook(data.win, 17, 0, win_close, 0);
-//	one I used before
-//	mlx_key_hook(data.win, key_hook, &data);
 	mlx_loop_hook(data.mlx, render, &data);
 	mlx_loop(data.mlx);
-	system("leaks fdf");
 	return (0);
 }
