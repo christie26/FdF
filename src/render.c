@@ -73,7 +73,6 @@ int	render(t_data *data)
 	render = transform_init(data, data->cube_set);
 	if (!render)
 		return (0);
-//	printf("render\n");
 	transform_scale(data, render);
 	transform_rotate(data, render);
 	transform_move(data, render);
@@ -81,6 +80,6 @@ int	render(t_data *data)
 	color = 0xFFFFFF;
 	get_plan(data, render, plan_set);
 	print_center(plan_set, data, color, *map);
-	data_reset(data);
+	data->status = 0;
 	return (0);
 }

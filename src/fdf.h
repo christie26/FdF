@@ -98,7 +98,6 @@ char	*ft_strjoin(char *s1, char *s2);
 char	**read_map(int fd, t_map *map);
 t_cube	*get_cube(t_map *map, char *av);
 void	data_init(t_data *data, t_map *map);
-void	data_reset(t_data *data);
 int		key_press(int keycode, t_data *data);
 int		win_close(void);
 int		render(t_data *data);

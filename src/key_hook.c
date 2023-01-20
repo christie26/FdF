@@ -34,10 +34,10 @@ int	key_press(int keycode, t_data *data)
 		printf("should show heat map\n");
 	
 	// z height
-//	if (keycode == B_LEFT)
-//		data->z_scale *= 0.9;
-//	if (keycode == B_RIGHT)
-//		data->z_scale *= 1.1;
+	if (keycode == B_LEFT)
+		data->z_scale *= 0.9;
+	if (keycode == B_RIGHT)
+		data->z_scale *= 1.1;
 	
 	data->status = 1;
 	

@@ -31,8 +31,3 @@ void	data_init(t_data *data, t_map *map)
 	data->img = 0;
 	return ;
 }
-
-void	data_reset(t_data *data)
-{
-	data->status = 0;
-}

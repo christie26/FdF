@@ -29,6 +29,7 @@ int	main(int ac, char **av)
 		exit(1);
 	data_init(&data, map);
 	data.map = map;
+//	printf("%d,%d\n", map->width,  map->height);
 	data.cube_set = cube_set;
 //	tring
 	mlx_hook(data.win, 2, 0, key_press, &data);
