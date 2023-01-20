@@ -1,4 +1,3 @@
-
 #include "fdf.h"
 
 void	print_sero(t_plan *plan_set, t_data *img, int color, t_map map)

@@ -1,4 +1,3 @@
-
 #include "fdf.h"
 
 void	key_press2(int keycode, t_data *data);

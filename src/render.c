@@ -1,4 +1,3 @@
-
 #include "fdf.h"
 
 void	transform_move(t_data *data, t_cube *cube)

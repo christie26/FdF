@@ -2,12 +2,11 @@
 SRCDIR		= ./src
 SRC			= draw_line.c \
 			  fdf_utils.c \
-			  main.c \
+			  fdf.c \
 			  transform_rotate.c \
 			  get_cube.c \
 			  get_plan.c \
 			  print_center.c \
-			  data_init.c \
 			  render.c \
 			  key_hook.c	
 SRC			:= $(addprefix $(SRCDIR)/, $(SRC))
