@@ -12,6 +12,12 @@
 
 #include "fdf.h"
 
+void	*error_msg(char *error_message)
+{
+	perror(error_message);
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	t_data	data;

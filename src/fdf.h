@@ -108,4 +108,5 @@ void	get_plan(t_data *data, t_cube *cube, t_plan *plan);
 void	print_center(t_plan *plan_set, t_data *img, int color, t_map map);
 void	draw_line(t_data *data, t_plan *point1, t_plan *point2, int color);
 void	write_pixel_image(t_data *data, int x, int y, int color);
+void	*error_msg(char *error_message);
 #endif

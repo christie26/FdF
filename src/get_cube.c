@@ -31,26 +31,6 @@ int	get_width(char *buf)
 	return (width);
 }
 
-int	open_file(char *av)
-{
-	int		fd;
-	char	*format;
-
-	format = ft_substr(av, ft_strlen(av) - 4, 4);
-	if (ft_memcmp(format, ".fdf.", 4))
-	{
-		perror("Error : unvalid file format!");
-		return (0);
-	}
-	fd = open(av, O_RDONLY);
-	if (fd == -1)
-	{
-		perror("Error :");
-		return (0);
-	}
-	return (fd);
-}
-
 char	**read_map(int fd, t_map *map)
 {
 	char	*buf;
@@ -64,7 +44,7 @@ char	**read_map(int fd, t_map *map)
 	while (buf)
 	{
 		if (get_width(buf) != map->width)
-			perror("Error : unvalid map!\n");
+			return (error_msg("Error : unvalid map!\n"));
 		map->height++;
 		buf = get_next_line(fd);
 		if (buf == 0)
@@ -130,8 +110,14 @@ t_cube	*get_cube(t_map *map, char *av)
 	int		fd;
 	char	**tab;
 	t_cube	*cube_set;
+	char	*format;
 
-	fd = open_file(av);
+	format = ft_substr(av, ft_strlen(av) - 4, 4);
+	if (ft_memcmp(format, ".fdf.", 4))
+		return (error_msg("Error : unvalid file format!"));
+	fd = open(av, O_RDONLY);
+	if (fd == -1)
+		return (error_msg("Error :"));
 	tab = read_map(fd, map);
 	if (!tab)
 		return (0);
