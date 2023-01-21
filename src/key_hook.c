@@ -32,15 +32,15 @@ int	key_press(int keycode, t_data *data)
 
 void	key_press2(int keycode, t_data *data)
 {
-	if (keycode == KEY_C)
-		printf("should show heat map\n");
 	if (keycode == B_LEFT)
 		data->z_scale *= 0.9;
 	if (keycode == B_RIGHT)
 		data->z_scale *= 1.1;
 	data->status = 1;
 	if (keycode == KEY_T)
-		data->status = 3;
+		data->status = TOPVIEW;
+	if (keycode == KEY_C)
+		data->status = HEATMAP;
 }
 
 int	win_close(void)

@@ -1,6 +1,6 @@
 #include "fdf.h"
 
-void	print_sero(t_plan *plan_set, t_data *img, int color, t_map map)
+void	print_sero(t_plan *plan_set, t_data *data, int color, t_map map)
 {
 	int	col;
 	int	row;
@@ -8,6 +8,7 @@ void	print_sero(t_plan *plan_set, t_data *img, int color, t_map map)
 	int	j;
 
 	col = 0;
+	(void)color;
 	while (col < map.width)
 	{
 		row = 0;
@@ -15,14 +16,17 @@ void	print_sero(t_plan *plan_set, t_data *img, int color, t_map map)
 		{
 			i = row * map.width + col;
 			j = (row + 1) * map.width + col;
-			draw_line(img, &(plan_set[i]), &(plan_set[j]), color);
+			if (data->status == HEATMAP)
+				draw_line(data, &(plan_set[i]), &(plan_set[j]), (data->cube_set[i]).color);
+			else
+				draw_line(data, &(plan_set[i]), &(plan_set[j]), color);
 			row++;
 		}
 		col++;
 	}
 }
 
-void	print_garo(t_plan *plan_set, t_data *img, int color, t_map map)
+void	print_garo(t_plan *plan_set, t_data *data, int color, t_map map)
 {
 	int	col;
 	int	row;
@@ -30,6 +34,7 @@ void	print_garo(t_plan *plan_set, t_data *img, int color, t_map map)
 	int	j;
 
 	row = 0;
+	(void)color;
 	while (row < map.height)
 	{
 		col = 0;
@@ -37,7 +42,10 @@ void	print_garo(t_plan *plan_set, t_data *img, int color, t_map map)
 		{
 			i = row * map.width + col;
 			j = row * map.width + col + 1;
-			draw_line(img, &(plan_set[i]), &(plan_set[j]), color);
+			if (data->status == HEATMAP)
+				draw_line(data, &(plan_set[i]), &(plan_set[j]), (data->cube_set[i]).color);
+			else
+				draw_line(data, &(plan_set[i]), &(plan_set[j]), color);
 			col++;
 		}
 		row++;

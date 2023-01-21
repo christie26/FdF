@@ -53,7 +53,7 @@ void	transform_rotate(t_data *data, t_cube *cube)
 	int	i;
 
 	i = 0;
-	while (i < data->map->width * data->map->height)
+	while (i < data->map->size)
 	{
 		rotate_y(data->y_ro * PI / 180, &cube[i]);
 		rotate_x(data->x_ro * PI / 180, &cube[i]);

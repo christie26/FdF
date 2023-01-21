@@ -57,14 +57,42 @@ void	top_view(t_data *data)
 	data->z_ro = 0;
 }
 
+void	heat_map(t_data *data)
+{
+	int		i;
+	double	start;
+	double	range;
+	double	z;
+
+	start = data->map->z_min;
+	range = data->map->z_max - data->map->z_min;
+	i = 0;
+	while (i < data->map->size)
+	{
+		z = data->cube_set[i].z;
+		if (start <= z && z < start + range * 0.25)
+			data->cube_set[i].color = FIRSTCOLOR;
+		else if (start + range * 0.25 <= z && z < start + range * 0.5)
+			data->cube_set[i].color = SECONDCOLOR;
+		else if (start + range * 0.5 <= z && z < start + range * 0.75)
+			data->cube_set[i].color = THIRDCOLOR;
+		else
+			data->cube_set[i].color = FORTHCOLOR;
+		i++;
+	}
+}
+// in this function, you add the color in cube struct
+
 int	render(t_data *data)
 {
 	t_cube	*render;
 
 	if (!data || !data->status)
 		return (0);
-	if (data->status == 2)
+	if (data->status == TOPVIEW)
 		top_view(data);
+	if (data->status == HEATMAP)
+		heat_map(data);
 	render = transform_init(data, data->cube_set);
 	if (!render)
 		return (0);

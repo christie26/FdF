@@ -30,18 +30,25 @@
 # define KEY_S 1
 # define KEY_D 2
 # define KEY_C 8
-# define KEY_P 35
 # define KEY_T 17
 # define B_LEFT 33
 # define B_RIGHT 30
 # define PLUS 24
 # define MINUS 27
+# define TOPVIEW 2
+# define HEATMAP 3
 # define PI 3.141592654
+# define FIRSTCOLOR 0xFFFFFF
+# define SECONDCOLOR 0xa6d5f6
+# define THIRDCOLOR 0x046fe0
+# define FORTHCOLOR 0x0063de
+
 
 typedef struct s_cube {
 	double	x;
 	double	y;
 	double	z;
+	int		color;
 }	t_cube;
 
 typedef struct s_plan {
@@ -60,6 +67,7 @@ typedef struct s_map {
 	double	z_min;
 	double	z_max;
 }	t_map;
+// I can delete x,y. Do it after check it
 
 typedef struct s_data {
 	void	*mlx;
