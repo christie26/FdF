@@ -43,7 +43,6 @@
 # define THIRDCOLOR 0x046fe0
 # define FORTHCOLOR 0x0063de
 
-
 typedef struct s_cube {
 	double	x;
 	double	y;
@@ -67,7 +66,6 @@ typedef struct s_map {
 	double	z_min;
 	double	z_max;
 }	t_map;
-// I can delete x,y. Do it after check it
 
 typedef struct s_data {
 	void	*mlx;
@@ -110,6 +108,7 @@ int		win_close(void);
 int		render(t_data *data);
 void	transform_rotate(t_data *data, t_cube *cube);
 void	transform_move(t_data *data, t_cube *cube);
+void	transform_scale(t_data *data, t_cube *cube);
 void	print_center(t_data *data, t_cube *render);
 void	draw_line(t_data *data, t_plan *point1, t_plan *point2, int color);
 void	write_pixel_image(t_data *data, int x, int y, int color);

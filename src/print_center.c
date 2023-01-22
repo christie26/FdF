@@ -17,7 +17,8 @@ void	print_sero(t_plan *plan_set, t_data *data, int color, t_map map)
 			i = row * map.width + col;
 			j = (row + 1) * map.width + col;
 			if (data->status == HEATMAP)
-				draw_line(data, &(plan_set[i]), &(plan_set[j]), (data->cube_set[i]).color);
+				draw_line(data, &(plan_set[i]), &(plan_set[j]), \
+				(data->cube_set[i]).color);
 			else
 				draw_line(data, &(plan_set[i]), &(plan_set[j]), color);
 			row++;
@@ -43,7 +44,8 @@ void	print_garo(t_plan *plan_set, t_data *data, int color, t_map map)
 			i = row * map.width + col;
 			j = row * map.width + col + 1;
 			if (data->status == HEATMAP)
-				draw_line(data, &(plan_set[i]), &(plan_set[j]), (data->cube_set[i]).color);
+				draw_line(data, &(plan_set[i]), &(plan_set[j]), \
+				(data->cube_set[i]).color);
 			else
 				draw_line(data, &(plan_set[i]), &(plan_set[j]), color);
 			col++;

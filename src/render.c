@@ -14,23 +14,6 @@ void	transform_move(t_data *data, t_cube *cube)
 	}
 }
 
-void	transform_scale(t_data *data, t_cube *cube)
-{
-	int	i;
-
-	i = 0;
-	if (data->scale == 1 && data->z_scale == 1)
-		return ;
-	while (i < data->map->width * data->map->height)
-	{
-		cube[i].x = cube[i].x * data->scale;
-		cube[i].y = cube[i].y * data->scale;
-		cube[i].z = cube[i].z * data->scale;
-		cube[i].z = cube[i].z * data->z_scale;
-		i++;
-	}
-}
-
 t_cube	*transform_init(t_data *data, t_cube *cube)
 {
 	int		i;

@@ -11,30 +11,28 @@ SRC			= fdf.c \
 SRC			:= $(addprefix $(SRCDIR)/, $(SRC))
 OBJ			= ${SRC:.c=.o}
 
+NAME		= ./fdf
+LIBFT		= ./libft/libft.a
 DYLIB		= ./mlx/libmlx.dylib
-NAME		= fdf
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -O3 -ffast-math -g
-LDFLAGS		= -fsanitize=address 
+CFLAGS		= -Wall -Wextra -Werror -O3 -ffast-math
+LDFLAGS		= -fsanitize=address
 RM			= rm -f
 
 all:		${NAME}
 
 %.o: 		%.c $(DYLIB)
-			$(CC) $(CFLAGS) $(LDFLAGS) -Imlx -c $< -o $@
+			$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
+$(NAME): 	$(OBJ) $(DYLIB) $(LIBFT)
+			$(CC) $(OBJ) -L./mlx -lmlx -L./libft -lft -framework OpenGL -framework AppKit -o $(NAME) 
+
+$(LIBFT):
+			make -j3 -C ./libft all
 $(DYLIB):	
 			make -C ./mlx
 			cp $(DYLIB) ./
-
-$(NAME): 	$(OBJ) $(DYLIB) libft
-			$(CC) $(OBJ) $(LDFLAGS) -L./mlx -lmlx -L./libft -lft -framework OpenGL -framework AppKit -o $(NAME) 
-
-.PHONY:		libft
-libft:
-			make -j3 -C ./libft all
-
 clean:
 			${RM} ${OBJ}
 			@make -C ./libft clean
