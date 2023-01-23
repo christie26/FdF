@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_center.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/22 19:33:16 by yoonsele          #+#    #+#             */
+/*   Updated: 2023/01/22 19:52:42 by yoonsele         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	print_sero(t_plan *plan_set, t_data *data, int color, t_map map)
@@ -86,4 +98,5 @@ void	print_center(t_data *data, t_cube *render)
 	color = 0xFFFFFF;
 	print_sero(plan_set, data, color, *(data->map));
 	print_garo(plan_set, data, color, *(data->map));
+	free(plan_set);
 }

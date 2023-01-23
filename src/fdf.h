@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 20:13:34 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/19 12:37:01 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/22 19:49:45 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,6 @@ typedef struct s_data {
 }	t_data;
 
 int		ft_abs(int d);
-size_t	ft_strlen(const char *str);
-void	*ft_calloc(size_t count, size_t size);
-char	*get_next_line(int fd);
-char	**ft_split(char const *s, char c);
-int		ft_atoi(const char *str);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-int		ft_memcmp(const void *s1, const void *s2, size_t n);
-char	*ft_strjoin(char *s1, char *s2);
 char	**read_map(int fd, t_map *map);
 t_cube	*get_cube(t_map *map, char *av);
 int		key_press(int keycode, t_data *data);
@@ -113,4 +105,5 @@ void	print_center(t_data *data, t_cube *render);
 void	draw_line(t_data *data, t_plan *point1, t_plan *point2, int color);
 void	write_pixel_image(t_data *data, int x, int y, int color);
 void	*error_msg(char *error_message);
+void	*handle_syscall(char *error_message);
 #endif

@@ -6,11 +6,13 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 17:57:08 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/19 12:21:41 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/22 19:51:21 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "libft.h"
+#include "get_next_line.h"
 
 int	get_width(char *buf)
 {
@@ -34,22 +36,24 @@ int	get_width(char *buf)
 char	**read_map(int fd, t_map *map)
 {
 	char	*buf;
+	char	*tmp;
 	char	*storage;
 	char	**tab;
 
 	buf = get_next_line(fd);
 	map->width = get_width(buf);
 	map->height = 0;
-	storage = buf;
+	storage = ft_strdup("");
 	while (buf)
 	{
 		if (get_width(buf) != map->width)
-			return (error_msg("Error : unvalid map!\n"));
+			return (error_msg("Error : unvalid map!"));
 		map->height++;
-		buf = get_next_line(fd);
-		if (buf == 0)
-			break ;
+		tmp = storage;
 		storage = ft_strjoin(storage, buf);
+		free(tmp);
+		free(buf);
+		buf = get_next_line(fd);
 	}
 	map->size = map->width * map->height;
 	tab = ft_split(storage, '\n');
@@ -75,8 +79,10 @@ void	make_cube(t_cube *cube_set, char **tab, t_map *map)
 			cube_set[i].x = 10 * x;
 			cube_set[i].y = 10 * y;
 			cube_set[i].z = ft_atoi(tab2[x]);
+			free(tab2[x]);
 			x++;
 		}
+		free(tab2);
 		free(tab[y]);
 		y++;
 	}
@@ -114,12 +120,12 @@ t_cube	*get_cube(t_map *map, char *av)
 	char	*format;
 
 	format = ft_substr(av, ft_strlen(av) - 4, 4);
-	if (ft_memcmp(format, ".fdf.", 4))
-		return (error_msg("Error : unvalid file format!"));
+	if (ft_memcmp(format, ".fdf", 4) || ft_strlen(av) < 5)
+		return (error_msg("Error: unvalid file format!"));
 	free(format);
 	fd = open(av, O_RDONLY);
 	if (fd == -1)
-		return (error_msg("Error :"));
+		return (handle_syscall(av));
 	tab = read_map(fd, map);
 	if (!tab)
 		return (0);

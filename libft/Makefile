@@ -6,7 +6,7 @@
 #    By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 11:44:34 by yoonsele          #+#    #+#              #
-#    Updated: 2023/01/16 16:53:41 by yoonsele         ###   ########.fr        #
+#    Updated: 2023/01/22 20:08:40 by yoonsele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS		= ft_strlen.c ft_strlcpy.c ft_strlcat.c \
 				ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c \
 				ft_itoa.c ft_utoa.c ft_strmapi.c ft_striteri.c \
 				ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
-				get_next_line.c get_next_line_utils.c
+				get_next_line.c
 
 BSRCS		= ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 				ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c \

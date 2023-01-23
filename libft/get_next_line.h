@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 12:00:22 by yoonsele          #+#    #+#             */
-/*   Updated: 2022/12/22 17:23:25 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/22 17:00:36 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
+# include "libft.h"
 
 char	*get_next_line(int fd);
-size_t	ft_strlen(char *str);
-char	*ft_strchr(char *s, int c);
-char	*ft_strdup(char *src);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_free(char **buf1, char **buf2);
 
 # ifndef BUFFER_SIZE

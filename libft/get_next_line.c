@@ -6,10 +6,11 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 12:00:07 by yoonsele          #+#    #+#             */
-/*   Updated: 2022/12/22 17:26:30 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/22 20:08:12 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "get_next_line.h"
 
 char	*ft_read_buffer(char *buf, char *storage, int fd)

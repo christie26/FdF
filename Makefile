@@ -16,14 +16,14 @@ LIBFT		= ./libft/libft.a
 DYLIB		= ./mlx/libmlx.dylib
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -O3 -ffast-math
+CFLAGS		= -Wall -Wextra -Werror -O3 -ffast-math -g
 LDFLAGS		= -fsanitize=address
 RM			= rm -f
 
 all:		${NAME}
 
 %.o: 		%.c $(DYLIB)
-			$(CC) $(CFLAGS) -Imlx -c $< -o $@
+			$(CC) $(CFLAGS) -Imlx -Ilibft -c $< -o $@
 
 $(NAME): 	$(OBJ) $(DYLIB) $(LIBFT)
 			$(CC) $(OBJ) -L./mlx -lmlx -L./libft -lft -framework OpenGL -framework AppKit -o $(NAME) 

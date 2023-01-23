@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 15:45:01 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/19 12:45:39 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/01/22 20:00:10 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "libft.h"
+#include <stdlib.h>
+
+void	*handle_syscall(char *error_message)
+{
+	perror(error_message);
+	return (0);
+}
 
 void	*error_msg(char *error_message)
 {
-	perror(error_message);
+	ft_putendl_fd(error_message, 2);
 	return (0);
 }
 
@@ -23,7 +31,7 @@ void	data_init(t_data *data, t_map *map)
 	data->x_mv = 0;
 	data->y_mv = 0;
 	data->z_mv = 0;
-	data->x_ro = 30;
+	data->x_ro = -30;
 	data->y_ro = 0;
 	data->z_ro = -30;
 	data->status = 1;
@@ -46,15 +54,15 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		perror("Error : ");
-		return (-1);
+		error_msg("Error: wrong argument !");
+		return (EXIT_FAILURE);
 	}
 	map = ft_calloc(1, sizeof(t_map));
 	if (!map)
-		return (0);
+		return (EXIT_FAILURE);
 	cube_set = get_cube(map, av[1]);
 	if (!cube_set)
-		exit(1);
+		return (EXIT_FAILURE);
 	data_init(&data, map);
 	data.map = map;
 	data.cube_set = cube_set;

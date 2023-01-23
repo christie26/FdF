@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/22 19:33:26 by yoonsele          #+#    #+#             */
+/*   Updated: 2023/01/22 19:51:59 by yoonsele         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	transform_move(t_data *data, t_cube *cube)
@@ -64,7 +76,6 @@ void	heat_map(t_data *data)
 		i++;
 	}
 }
-// in this function, you add the color in cube struct
 
 int	render(t_data *data)
 {
@@ -83,6 +94,7 @@ int	render(t_data *data)
 	transform_rotate(data, render);
 	transform_move(data, render);
 	print_center(data, render);
+	free(render);
 	data->status = 0;
 	return (0);
 }

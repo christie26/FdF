@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   key_hook.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/22 19:33:08 by yoonsele          #+#    #+#             */
+/*   Updated: 2023/01/22 19:57:28 by yoonsele         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	key_press2(int keycode, t_data *data);
@@ -7,9 +19,9 @@ int	key_press(int keycode, t_data *data)
 	if (keycode == ESC)
 		exit(EXIT_SUCCESS);
 	if (keycode == LEFT)
-		data->y_ro -= 1;
-	if (keycode == RIGHT)
 		data->y_ro += 1;
+	if (keycode == RIGHT)
+		data->y_ro -= 1;
 	if (keycode == UP)
 		data->x_ro -= 1;
 	if (keycode == DOWN)
@@ -45,5 +57,5 @@ void	key_press2(int keycode, t_data *data)
 
 int	win_close(void)
 {
-	exit (1);
+	exit (EXIT_SUCCESS);
 }
