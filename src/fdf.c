@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 15:45:01 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/22 20:00:10 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/02/22 16:50:45 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	data_init(t_data *data, t_map *map)
 	data->y_ro = 0;
 	data->z_ro = -30;
 	data->status = 1;
+	data->color = 0;
 	data->scale = 1;
 	data->z_scale = 1;
 	data->x = (map->x_max - map->x_min) / 2;

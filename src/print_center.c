@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:33:16 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/22 19:52:42 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/02/22 17:25:57 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	print_sero(t_plan *plan_set, t_data *data, int color, t_map map)
 		{
 			i = row * map.width + col;
 			j = (row + 1) * map.width + col;
-			if (data->status == HEATMAP)
+			if (data->color)
 				draw_line(data, &(plan_set[i]), &(plan_set[j]), \
 				(data->cube_set[i]).color);
 			else
@@ -55,7 +55,7 @@ void	print_garo(t_plan *plan_set, t_data *data, int color, t_map map)
 		{
 			i = row * map.width + col;
 			j = row * map.width + col + 1;
-			if (data->status == HEATMAP)
+			if (data->color)
 				draw_line(data, &(plan_set[i]), &(plan_set[j]), \
 				(data->cube_set[i]).color);
 			else

@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:33:08 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/22 19:57:28 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/02/22 16:53:44 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,13 @@ void	key_press2(int keycode, t_data *data)
 	if (keycode == KEY_T)
 		data->status = TOPVIEW;
 	if (keycode == KEY_C)
-		data->status = HEATMAP;
+	{
+		if (data->color == 0)
+			data->color = 1;
+		else
+			data->color = 0;
+	printf("data->color = %d\n", data->color);
+	}
 }
 
 int	win_close(void)

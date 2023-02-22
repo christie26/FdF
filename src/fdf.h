@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 20:13:34 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/22 19:49:45 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/02/22 16:55:33 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_data {
 	int		line_length;
 	int		endian;
 	int		status;
+	int		color;
 	double	x_ro;
 	double	y_ro;
 	double	z_ro;

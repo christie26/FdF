@@ -6,7 +6,7 @@
 /*   By: yoonsele <yoonsele@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:33:26 by yoonsele          #+#    #+#             */
-/*   Updated: 2023/01/22 19:51:59 by yoonsele         ###   ########.fr       */
+/*   Updated: 2023/02/22 17:26:50 by yoonsele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_cube	*transform_init(t_data *data, t_cube *cube)
 	if (!render)
 		return (0);
 	while (i < data->map->width * data->map->height)
-	{	
+	{
 		render[i].x = cube[i].x - data->x;
 		render[i].y = cube[i].y - data->y;
 		render[i].z = cube[i].z - data->z;
@@ -85,7 +85,7 @@ int	render(t_data *data)
 		return (0);
 	if (data->status == TOPVIEW)
 		top_view(data);
-	if (data->status == HEATMAP)
+	if (data->color)
 		heat_map(data);
 	render = transform_init(data, data->cube_set);
 	if (!render)
