@@ -85,7 +85,7 @@ int	render(t_data *data)
 		return (0);
 	if (data->status == TOPVIEW)
 		top_view(data);
-	if (data->trans->color)
+	if (data->color)
 		heat_map(data);
 	render = transform_init(data, data->cube_set);
 	if (!render)

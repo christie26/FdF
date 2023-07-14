@@ -73,8 +73,8 @@ void	get_plan(t_data *data, t_cube *cube, t_plan *plan)
 	i = 0;
 	while (i < data->map->width * data->map->height)
 	{
-		plan[i].x = 500 + cube[i].x;
-		plan[i].y = 400 + cube[i].y;
+		plan[i].x = WIN_WIDTH / 2 + cube[i].x;
+		plan[i].y = WIN_HEIGHT / 2 + cube[i].y;
 		i++;
 	}
 	return ;
@@ -91,7 +91,7 @@ void	print_center(t_data *data, t_cube *render)
 	get_plan(data, render, plan_set);
 	if (data->img)
 		mlx_destroy_image(data->mlx, data->img);
-	data->img = mlx_new_image(data->mlx, 1000, 800);
+	data->img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 	&data->line_length, &data->endian);

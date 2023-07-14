@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "libft.h"
 
 void	*handle_syscall(char *error_message)
 {
@@ -30,22 +29,24 @@ void	data_init(t_data *data, t_map *map)
 	t_trans	*trans;
 
 	trans = malloc(sizeof(t_trans));
+	if (!trans)
+		exit(EXIT_FAILURE);
 	trans->x_mv = 0;
 	trans->y_mv = 0;
 	trans->z_mv = 0;
 	trans->x_ro = -30;
 	trans->y_ro = 0;
 	trans->z_ro = -30;
-	trans->color = 0;
 	trans->scale = 1;
 	trans->z_scale = 1;
 	trans->x = (map->x_max - map->x_min) / 2;
 	trans->y = (map->y_max - map->y_min) / 2;
 	trans->z = (map->z_max - map->z_min) / 2;
 	data->mlx = mlx_init();
-	data->win = mlx_new_window(data->mlx, 1000, 800, "mlx 42");
+	data->win = mlx_new_window(data->mlx, WIN_WIDTH, WIN_HEIGHT, "mlx 42");
 	data->img = 0;
 	data->status = 1;
+	data->color = 0;
 	data->trans = trans;
 	return ;
 }

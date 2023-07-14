@@ -20,6 +20,12 @@
 # include <stdio.h>
 # include <fcntl.h>
 
+#include "get_next_line.h"
+#include "libft.h"
+
+# define WIN_WIDTH 1000
+# define WIN_HEIGHT 800
+
 # define ESC 53
 # define LEFT 123
 # define RIGHT 124
@@ -68,7 +74,6 @@ typedef struct s_map {
 }	t_map;
 
 typedef struct s_trans{
-	int		color;
 	double	x_ro;
 	double	y_ro;
 	double	z_ro;
@@ -91,6 +96,7 @@ typedef struct s_data {
 	int		line_length;
 	int		endian;
 	int		status;
+	int		color;
 	t_trans	*trans;
 	t_map	*map;
 	t_cube	*cube_set;

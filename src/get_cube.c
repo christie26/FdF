@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "libft.h"
-#include "get_next_line.h"
 
 int	get_width(char *buf)
 {

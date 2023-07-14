@@ -19,25 +19,25 @@ int	key_press(int keycode, t_data *data)
 	if (keycode == ESC)
 		exit(EXIT_SUCCESS);
 	if (keycode == LEFT)
-		data->y_ro += 1;
+		data->trans->y_ro += 1;
 	if (keycode == RIGHT)
-		data->y_ro -= 1;
+		data->trans->y_ro -= 1;
 	if (keycode == UP)
-		data->x_ro -= 1;
+		data->trans->x_ro -= 1;
 	if (keycode == DOWN)
-		data->x_ro += 1;
+		data->trans->x_ro += 1;
 	if (keycode == KEY_W)
-		data->y_mv -= 5;
+		data->trans->y_mv -= 5;
 	if (keycode == KEY_S)
-		data->y_mv += 5;
+		data->trans->y_mv += 5;
 	if (keycode == KEY_A)
-		data->x_mv -= 5;
+		data->trans->x_mv -= 5;
 	if (keycode == KEY_D)
-		data->x_mv += 5;
+		data->trans->x_mv += 5;
 	if (keycode == PLUS)
-		data->scale *= 1.1;
+		data->trans->scale *= 1.1;
 	if (keycode == MINUS)
-		data->scale *= 0.9;
+		data->trans->scale *= 0.9;
 	key_press2(keycode, data);
 	return (0);
 }
@@ -45,9 +45,9 @@ int	key_press(int keycode, t_data *data)
 void	key_press2(int keycode, t_data *data)
 {
 	if (keycode == B_LEFT)
-		data->z_scale *= 0.9;
+		data->trans->z_scale *= 0.9;
 	if (keycode == B_RIGHT)
-		data->z_scale *= 1.1;
+		data->trans->z_scale *= 1.1;
 	data->status = 1;
 	if (keycode == KEY_T)
 		data->status = TOPVIEW;
@@ -57,7 +57,6 @@ void	key_press2(int keycode, t_data *data)
 			data->color = 1;
 		else
 			data->color = 0;
-	printf("data->color = %d\n", data->color);
 	}
 }
 
