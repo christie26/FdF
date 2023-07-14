@@ -1,6 +1,7 @@
 
 SRCDIR		= ./src
-SRC			= fdf.c \
+SRC			= main.c \
+			  fdf.c \
 			  fdf_utils.c \
 			  get_cube.c \
 			  render.c \

@@ -93,6 +93,7 @@ typedef struct s_data {
 	t_cube	*render;
 }	t_data;
 
+void	data_init(t_data *data, t_map *map);
 int		ft_abs(int d);
 char	**read_map(int fd, t_map *map);
 t_cube	*get_cube(t_map *map, char *av);
