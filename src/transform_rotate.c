@@ -55,9 +55,9 @@ void	transform_rotate(t_data *data, t_cube *cube)
 	i = 0;
 	while (i < data->map->size)
 	{
-		rotate_y(data->y_ro * PI / 180, &cube[i]);
-		rotate_x(data->x_ro * PI / 180, &cube[i]);
-		rotate_z(data->z_ro * PI / 180, &cube[i]);
+		rotate_y(data->trans->y_ro * PI / 180, &cube[i]);
+		rotate_x(data->trans->x_ro * PI / 180, &cube[i]);
+		rotate_z(data->trans->z_ro * PI / 180, &cube[i]);
 		i++;
 	}
 	return ;
@@ -68,14 +68,14 @@ void	transform_scale(t_data *data, t_cube *cube)
 	int	i;
 
 	i = 0;
-	if (data->scale == 1 && data->z_scale == 1)
+	if (data->trans->scale == 1 && data->trans->z_scale == 1)
 		return ;
 	while (i < data->map->width * data->map->height)
 	{
-		cube[i].x = cube[i].x * data->scale;
-		cube[i].y = cube[i].y * data->scale;
-		cube[i].z = cube[i].z * data->scale;
-		cube[i].z = cube[i].z * data->z_scale;
+		cube[i].x = cube[i].x * data->trans->scale;
+		cube[i].y = cube[i].y * data->trans->scale;
+		cube[i].z = cube[i].z * data->trans->scale;
+		cube[i].z = cube[i].z * data->trans->z_scale;
 		i++;
 	}
 }

@@ -19,9 +19,9 @@ void	transform_move(t_data *data, t_cube *cube)
 	i = 0;
 	while (i < data->map->width * data->map->height)
 	{	
-		cube[i].x += data->x_mv;
-		cube[i].y += data->y_mv;
-		cube[i].z += data->z_mv;
+		cube[i].x += data->trans->x_mv;
+		cube[i].y += data->trans->y_mv;
+		cube[i].z += data->trans->z_mv;
 		i++;
 	}
 }
@@ -37,9 +37,9 @@ t_cube	*transform_init(t_data *data, t_cube *cube)
 		return (0);
 	while (i < data->map->width * data->map->height)
 	{
-		render[i].x = cube[i].x - data->x;
-		render[i].y = cube[i].y - data->y;
-		render[i].z = cube[i].z - data->z;
+		render[i].x = cube[i].x - data->trans->x;
+		render[i].y = cube[i].y - data->trans->y;
+		render[i].z = cube[i].z - data->trans->z;
 		i++;
 	}
 	return (render);
@@ -47,9 +47,9 @@ t_cube	*transform_init(t_data *data, t_cube *cube)
 
 void	top_view(t_data *data)
 {
-	data->x_ro = 0;
-	data->y_ro = 0;
-	data->z_ro = 0;
+	data->trans->x_ro = 0;
+	data->trans->y_ro = 0;
+	data->trans->z_ro = 0;
 }
 
 void	heat_map(t_data *data)
@@ -85,7 +85,7 @@ int	render(t_data *data)
 		return (0);
 	if (data->status == TOPVIEW)
 		top_view(data);
-	if (data->color)
+	if (data->trans->color)
 		heat_map(data);
 	render = transform_init(data, data->cube_set);
 	if (!render)

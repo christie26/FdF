@@ -67,15 +67,7 @@ typedef struct s_map {
 	double	z_max;
 }	t_map;
 
-typedef struct s_data {
-	void	*mlx;
-	void	*win;
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	int		status;
+typedef struct s_trans{
 	int		color;
 	double	x_ro;
 	double	y_ro;
@@ -88,6 +80,18 @@ typedef struct s_data {
 	double	z;
 	double	scale;
 	double	z_scale;
+}	t_trans;
+
+typedef struct s_data {
+	void	*mlx;
+	void	*win;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		status;
+	t_trans	*trans;
 	t_map	*map;
 	t_cube	*cube_set;
 	t_cube	*render;
